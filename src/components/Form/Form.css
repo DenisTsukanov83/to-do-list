@@ -1,0 +1,9 @@
+.Form-tasks {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.Form-tasks input {
+    width: 150px;
+}

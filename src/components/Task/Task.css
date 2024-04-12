@@ -1,0 +1,18 @@
+.task {
+    width: 300px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.task-trash {
+    width: 25px;
+    height: auto;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.task-trash img {
+    width: 100%;
+    height: 100%;
+}

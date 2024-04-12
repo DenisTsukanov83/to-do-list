@@ -1,0 +1,17 @@
+.Month {
+    width: 350px;
+}
+.month-calendar {
+    display: grid;
+    grid-template-columns: repeat(7, 50px);
+    grid-template-rows: repeat(6, 50px);
+}
+
+.Month-days {
+    width: 100%;
+}
+
+.Month-days strong {
+    display: inline-block;
+    width: 50px;
+}

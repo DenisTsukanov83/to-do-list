@@ -1,0 +1,16 @@
+.Hour {
+    display: flex;
+    width: 300px;
+    gap: 30px;
+    cursor: pointer;
+}
+
+.Hour-content {
+    width: 100%;
+}
+
+.Hour-task {
+    width: 100%;
+    height: 20px;
+    border-bottom: 1px solid black;
+}

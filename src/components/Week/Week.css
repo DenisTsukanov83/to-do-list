@@ -1,0 +1,9 @@
+.Week {
+    width: 100%;
+}
+
+.Week-calendar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}

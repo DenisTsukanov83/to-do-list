@@ -1,4 +1,12 @@
+body, html {
+    font-size: 1vw;
+}
+
 .App {
     display: flex;
-    gap: 100px;
+    
+}
+
+.App-calendar {
+    width: 45.15rem;
 }

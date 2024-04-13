@@ -24,17 +24,19 @@ const Month: FC<MonthProps> = ({ inputRef, handleChange, daysArr, currentDate, c
 
     return (
         <div className="Month">
-            <h3>План на месяц</h3>
-            <input type="date" ref={inputRef} onChange={handleChange} value={currentDate} />
-            <div>{time.monthName[new Date(currentDate).getMonth()]}</div>
+            <div className="Month-title">
+                <h3>План на месяц</h3>
+                <input type="date" ref={inputRef} onChange={handleChange} value={currentDate} />
+            </div>
+            <strong>{time.monthName[new Date(currentDate).getMonth()]}</strong>
             <div className="Month-days">
-                <strong>Пн</strong>
-                <strong>Вт</strong>
-                <strong>Ср</strong>
-                <strong>Чт</strong>
-                <strong>Пт</strong>
-                <strong>Сб</strong>
-                <strong>Вс</strong>
+                <b>Пн</b>
+                <b>Вт</b>
+                <b>Ср</b>
+                <b>Чт</b>
+                <b>Пт</b>
+                <b>Сб</b>
+                <b>Вс</b>
             </div>
             <div className="month-calendar" onClick={chooseDate}>
                 {daysArr.map((el, i) => {

@@ -1,17 +1,29 @@
 .Month {
-    width: 350px;
+    width: 100%;
 }
 .month-calendar {
     display: grid;
-    grid-template-columns: repeat(7, 50px);
-    grid-template-rows: repeat(6, 50px);
+    grid-template-columns: repeat(7, 2.5rem);
+    grid-template-rows: repeat(6, 2.5rem);
 }
 
 .Month-days {
     width: 100%;
 }
 
-.Month-days strong {
+.Month-days b {
     display: inline-block;
-    width: 50px;
+    width: 2.5rem;
+}
+
+.Month-title {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+.Month-title input {
+    width: 6.8rem;
+    height: auto;
+    font-size: 0.8rem;
 }

@@ -7,6 +7,7 @@ import { timeType } from "../types/timeType";
 import Month from '../Month/Month';
 import Tasks from '../Tasks/Tasks';
 import Form from '../Form/Form';
+import Week from '../Week/Week';
 
 
 
@@ -51,8 +52,23 @@ const App: FC = () => {
         ],
         monthName2: [
             'января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'
-        ]
+        ],
+        dayName: ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресенье']
 
+    }
+
+    // Returns the ISO week of the date.
+    // eslint-disable-next-line no-extend-native
+    function getNumberWeek (newDate: Date) {
+        var date = new Date(newDate.getTime());
+        date.setHours(0, 0, 0, 0);
+        // Thursday in current week decides the year.
+        date.setDate(date.getDate() + 3 - (date.getDay() + 6) % 7);
+        // January 4 is always in week 1.
+        var week1 = new Date(date.getFullYear(), 0, 4);
+        // Adjust to Thursday in week 1 and count number of weeks from date to week1.
+        return 1 + Math.round(((date.getTime() - week1.getTime()) / 86400000
+            - 3 + (week1.getDay() + 6) % 7) / 7);
     }
 
     function handleChange(e: ChangeEvent<HTMLInputElement>) {
@@ -68,40 +84,48 @@ const App: FC = () => {
             daysArr.push({
                 id: `last-${i}`,
                 status: 'last',
-                date: new Date(time.currentYear, time.currentMonth - 1, time.lastDateLastMonth - j)
+                date: new Date(time.currentYear, time.currentMonth - 1, time.lastDateLastMonth - j),
+                numberWeek: getNumberWeek(new Date(time.currentYear, time.currentMonth - 1, time.lastDateLastMonth - j))
             });
         }
         for (let i = 0; i < time.lastDateCurrentMonth; i++) {
             daysArr.push({
                 id: `current-${i}`,
                 status: 'current',
-                date: new Date(time.currentYear, time.currentMonth, i + 1)
+                date: new Date(time.currentYear, time.currentMonth, i + 1),
+                numberWeek: getNumberWeek(new Date(time.currentYear, time.currentMonth, i + 1))
             });
         }
         for (let i = 0; i < 42 - time.indexFirstDay - time.lastDateCurrentMonth; i++) {
             daysArr.push({
                 id: `next-${i}`,
                 status: 'next',
-                date: new Date(time.currentYear, time.currentMonth + 1, 1 + i)
+                date: new Date(time.currentYear, time.currentMonth + 1, 1 + i),
+                numberWeek: getNumberWeek(new Date(time.currentYear, time.currentMonth + 1, 1 + i))
             });
         }
         return daysArr;
     }
 
+    const [numberWeek, setNumberWeek] = useState(getNumberWeek(new Date()));
+
     function chooseDate(e: MouseEvent<HTMLElement>) {
         const day = (e.target as HTMLElement).closest('.day');
-        let date = getDaysArr().find(el => {
-            return el.id === (day as HTMLElement).id;
-        });
-        setChangedDate(date ? date.date : new Date());
-        setCurrentDate(date ? `${date.date.getFullYear()}-${date.date.getMonth() + 1 < 10 ? '0' + (date.date.getMonth() + 1) : date.date.getMonth() + 1}-${date.date.getDate() < 10 ? '0' + date.date.getDate() : date.date.getDate()}` : '');
+        if (day) {
+            let date = getDaysArr().find(el => {
+                return el.id === (day as HTMLElement).id;
+            });
+            setChangedDate(date ? date.date : new Date());
+            setCurrentDate(date ? `${date.date.getFullYear()}-${date.date.getMonth() + 1 < 10 ? '0' + (date.date.getMonth() + 1) : date.date.getMonth() + 1}-${date.date.getDate() < 10 ? '0' + date.date.getDate() : date.date.getDate()}` : '');
+            setNumberWeek(date ? date.numberWeek : 1)
+        }
     }
 
     const [changedHour, setChangedHour] = useState('07:00');
 
     function chooseHour(e: MouseEvent<HTMLElement>) {
         const el = (e.target as HTMLElement).closest('.Hour');
-        if(el) {
+        if (el) {
             setChangedHour(el ? `${(el as HTMLElement).dataset.time}` : '');
         }
     }
@@ -146,22 +170,22 @@ const App: FC = () => {
     function addData() {
         const index = data.findIndex(el => el.date.getTime() === changedDate.getTime());
         let newArr: dataType[] = [];
-        if(index >= 0) {
+        if (index >= 0) {
             const newData = data[index];
-            newData.hours[changedHour].push({index: newData.hours[changedHour].length, task: ''});
+            newData.hours[changedHour].push({ index: newData.hours[changedHour].length, task: '' });
             newData.date = changedDate;
             newArr = data.filter(el => el.date.getTime() !== changedDate.getTime());
             newArr.push(newData);
         } else {
             const newData = dataNative;
-            newData.hours[changedHour].push({index: newData.hours[changedHour].length, task: ''});
+            newData.hours[changedHour].push({ index: newData.hours[changedHour].length, task: '' });
             newData.date = changedDate;
             newArr = [...data, newData];
         }
-        
+
         setData(newArr);
 
-        
+
     }
 
     function addTask(e: ChangeEvent<HTMLInputElement>) {
@@ -176,7 +200,7 @@ const App: FC = () => {
         const index = data.findIndex(el => el.date.getTime() === changedDate.getTime());
         const newData = data[index];
         const dataIndex: string | undefined = (e.target as HTMLElement).dataset.index
-        if(dataIndex) {
+        if (dataIndex) {
             newData.hours[changedHour] = newData.hours[changedHour].filter((el, i) => i !== +dataIndex);
         }
         let newArr: dataType[] = [];
@@ -189,22 +213,28 @@ const App: FC = () => {
 
     return (
         <div className="App">
-            <Month
-                inputRef={inputRef}
-                handleChange={handleChange}
-                daysArr={getDaysArr()}
-                currentDate={currentDate}
-                chooseDate={chooseDate}
-                changedDate={changedDate}
-                time={time} 
-                data={data}/>
+            <div className='App-calendar'>
+                <Month
+                    inputRef={inputRef}
+                    handleChange={handleChange}
+                    daysArr={getDaysArr()}
+                    currentDate={currentDate}
+                    chooseDate={chooseDate}
+                    changedDate={changedDate}
+                    time={time}
+                    data={data} />
+
+                <Week 
+                    time={time}/>
+            </div>
+
 
             <Tasks
                 time={time}
                 changedDate={changedDate}
                 chooseHour={chooseHour}
-                changedHour={changedHour} 
-                data={data}/>
+                changedHour={changedHour}
+                data={data} />
 
             <Form
                 changedDate={changedDate}
@@ -213,7 +243,7 @@ const App: FC = () => {
                 addData={addData}
                 data={data}
                 addTask={addTask}
-                deleteTask={deleteTask}/>
+                deleteTask={deleteTask} />
         </div>
     );
 }

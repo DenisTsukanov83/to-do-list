@@ -1,0 +1,27 @@
+.Week-day {
+    width: 12rem;
+}
+
+.Week-day-list {
+    font-size: 0.7rem;
+    
+}
+
+.Week-day-list li {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 0.2rem;
+}
+
+.Week-day-check {
+    width: 0.7rem;
+    height: 0.7rem;
+    border: 0.06rem solid black;
+}
+
+.Week-day-data {
+    width: 100%;
+    height: 0.9rem;
+    border-bottom: 0.06rem solid black;
+}

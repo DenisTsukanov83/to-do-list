@@ -6,4 +6,5 @@ export interface timeType {
     readonly currentMonth: number;
     monthName: string[];
     monthName2: string[];
+    dayName: string[];
 }

@@ -2,11 +2,15 @@
     width: 300px;
     display: flex;
     align-items: center;
-    gap: 5px;
+    gap: 0.3rem;
+}
+
+.task input {
+    font-size: 0.8rem;
 }
 
 .task-trash {
-    width: 25px;
+    width: 1.5rem;
     height: auto;
     display: inline-block;
     cursor: pointer;

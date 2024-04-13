@@ -1,9 +1,15 @@
 .Form-tasks {
     display: flex;
     flex-direction: column;
-    gap: 5px;
+    gap: 0.3rem;
 }
 
 .Form-tasks input {
-    width: 150px;
+    width: 9rem;
+}
+
+.Form button {
+    width: 6.6rem;
+    height: auto;
+    font-size: 0.8rem;
 }

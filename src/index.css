@@ -7,6 +7,13 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+@font-face {
+  font-family: 'BadScript';
+  src: local('DancingScript'),
+    url('./fonts/BadScript-Regular.ttf');
+  font-weight: static;
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;

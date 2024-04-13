@@ -1,4 +1,4 @@
-import React, {FC, MouseEvent} from "react";
+import React, {FC, MouseEvent, useEffect} from "react";
 import './Task.css';
 import trash from '../../sources/trash.png';
 
@@ -9,11 +9,19 @@ interface TaskProps{
 }
 
 const Task: FC<TaskProps> = ({data, i, deleteTask}) => {
+    const myRef = React.createRef<HTMLInputElement>();
+    
+
+    useEffect(() => {
+        if(myRef.current) {
+            myRef.current.focus();
+        }
+    })
 
     return (
         <div className="task">
             <strong>{`${i + 1}.`}</strong>
-            <input type="text" value={data} name={`${i}`}/>
+            <input ref={myRef} type="text" value={data} name={`${i}`}/>
             <span className="task-trash" onClick={deleteTask}>
                 <img src={trash} alt="" data-index={i}/>
             </span>

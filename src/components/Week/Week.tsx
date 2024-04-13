@@ -22,15 +22,16 @@ interface WeekProps {
 
 const Week: FC<WeekProps>  = ({time, getDaysArr, numberWeek, data, dataNative}) => {
     const newDaysArr = getDaysArr().filter(el => el.numberWeek === numberWeek);
+    
     return (
         <div className="Week">
             <div className="Week-title">
-                <h3>План на неделю</h3>
+                <h3>{`План на ${numberWeek} неделю`}</h3>
             </div>
             <div className="Week-calendar">
                 {
                     time.dayName.map((el, i) => {
-                        let newData = dataNative
+                        let newData = dataNative;
                         data.forEach(el => {
                             if(el.date.getTime() === newDaysArr[i].date.getTime()) {
                                 newData = el;
@@ -43,7 +44,7 @@ const Week: FC<WeekProps>  = ({time, getDaysArr, numberWeek, data, dataNative}) 
                             }
                         }
                         
-                        return <DayOfWeek key={i} dayName={el} data={newData} tasksArr={tasksArr.flat()}/>
+                        return <DayOfWeek key={i} dayName={el} tasksArr={tasksArr.flat()}/>
                     })
                 }
             </div>

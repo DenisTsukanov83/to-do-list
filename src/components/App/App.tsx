@@ -225,7 +225,11 @@ const App: FC = () => {
                     data={data} />
 
                 <Week 
-                    time={time}/>
+                    time={time}
+                    getDaysArr={getDaysArr}
+                    numberWeek={numberWeek}
+                    data={data}
+                    dataNative={dataNative}/>
             </div>
 
 

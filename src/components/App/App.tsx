@@ -197,7 +197,6 @@ const App: FC = () => {
     }
 
     function deleteTask(e: MouseEvent<HTMLElement>) {
-        console.log((e.target as HTMLElement).dataset.index)
         const index = data.findIndex(el => el.date.getTime() === changedDate.getTime());
         const newData = data[index];
         const dataIndex: string | undefined = (e.target as HTMLElement).dataset.index
@@ -207,6 +206,29 @@ const App: FC = () => {
         let newArr: dataType[] = [];
         newArr = data.filter(el => el.date.getTime() !== changedDate.getTime());
         newArr.push(newData);
+
+        setData(newArr);
+    }
+
+
+
+    function onSelect(e: ChangeEvent<HTMLSelectElement>) {
+        const index = data.findIndex(el => el.date.getTime() === changedDate.getTime());
+        let newArr: dataType[] = [];
+        if (index >= 0) {
+            const newData = data[index];
+            newData.hours[changedHour] = newData.hours[changedHour].map((el, i) => {
+                if(i === +(e.target as HTMLSelectElement).name) {
+                    const newTask = newData.hours[changedHour][i].task
+                    return { index: newData.hours[changedHour].length, task: newTask,  priority: +(e.target as HTMLSelectElement).value}
+                } else {
+                    return el;
+                }
+            });
+            newData.date = changedDate;
+            newArr = data.filter(el => el.date.getTime() !== changedDate.getTime());
+            newArr.push(newData);
+        }
 
         setData(newArr);
     }
@@ -248,7 +270,8 @@ const App: FC = () => {
                 addData={addData}
                 data={data}
                 addTask={addTask}
-                deleteTask={deleteTask} />
+                deleteTask={deleteTask} 
+                onSelect={onSelect}/>
         </div>
     );
 }

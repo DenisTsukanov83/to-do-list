@@ -26,7 +26,7 @@ const Hour: FC<HourProps> = ({clock, changedHour, data, priority}) => {
         return color;
     }
 
-    console.log(data)
+    /* console.log(data[0].priority) */
 
     return (
         <div className={`Hour ${changedHour === clock ? 'changed' : ''}`} data-time={clock}>

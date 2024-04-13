@@ -1,5 +1,10 @@
 .Week-day {
     width: 12rem;
+    cursor: pointer;
+}
+
+.Week-day:hover {
+    background-color: #929292;
 }
 
 .Week-day-list {

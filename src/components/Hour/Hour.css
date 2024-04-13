@@ -18,7 +18,7 @@
     height: 1.3rem;
     border-bottom: 1px solid black;
     font-family: BadScript;
-    color: rgb(3, 3, 255);
+    /* color: rgb(3, 3, 255); */
     font-size: 0.9rem;
     font-weight: 900;
     display: flex;

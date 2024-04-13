@@ -10,3 +10,15 @@ body, html {
 .App-calendar {
     width: 45.15rem;
 }
+
+.blueColor {
+    color: blue;
+}
+
+.redColor {
+    color: red;
+}
+
+.greenColor {
+    color: green;
+}

@@ -172,13 +172,13 @@ const App: FC = () => {
         let newArr: dataType[] = [];
         if (index >= 0) {
             const newData = data[index];
-            newData.hours[changedHour].push({ index: newData.hours[changedHour].length, task: '' });
+            newData.hours[changedHour].push({ index: newData.hours[changedHour].length, task: '',  priority: 0});
             newData.date = changedDate;
             newArr = data.filter(el => el.date.getTime() !== changedDate.getTime());
             newArr.push(newData);
         } else {
             const newData = dataNative;
-            newData.hours[changedHour].push({ index: newData.hours[changedHour].length, task: '' });
+            newData.hours[changedHour].push({ index: newData.hours[changedHour].length, task: '',  priority: 0});
             newData.date = changedDate;
             newArr = [...data, newData];
         }
@@ -188,10 +188,11 @@ const App: FC = () => {
 
     }
 
-    function addTask(e: ChangeEvent<HTMLInputElement>) {
+    function addTask(e: ChangeEvent<HTMLInputElement>, priority: number) {
         const index = data.findIndex(el => el.date.getTime() === changedDate.getTime());
         const newData = data[index];
         newData.hours[changedHour][+(e.target as HTMLInputElement).name].task = (e.target as HTMLInputElement).value;
+        newData.hours[changedHour][+(e.target as HTMLInputElement).name].priority = priority;
         setData([...data, newData]);
     }
 

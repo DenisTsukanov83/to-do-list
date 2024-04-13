@@ -13,7 +13,7 @@ interface FormProps {
     time: timeType,
     addData: () => any,
     data: dataType[],
-    addTask: (e: ChangeEvent<HTMLInputElement>) => any,
+    addTask: (e: ChangeEvent<HTMLInputElement>, priority: number) => any,
     deleteTask: (e: MouseEvent<HTMLElement>) => any
 }
 
@@ -23,9 +23,9 @@ const Form: FC<FormProps> = ({ changedDate, changedHour, time, addData, data, ad
     return (
         <div className="Form">
             <h3>{`Задачи на ${changedDate.getDate()} ${time.monthName2[changedDate.getMonth()]} ${changedDate.getFullYear()} / ${changedHour}`}</h3>
-            <div className="Form-tasks" onChange={addTask}>
+            <div className="Form-tasks">
                 {inputsArr.map((el, i) => {
-                    return <Task key={i} data={data[index].hours[changedHour][i].task} i={i} deleteTask={deleteTask}/>
+                    return <Task key={i} data={data[index].hours[changedHour][i].task} i={i} deleteTask={deleteTask} addTask={addTask}/>
                 })}
             </div>
             <button onClick={addData}>Добавить задачу</button>

@@ -15,9 +15,9 @@ const Hour: FC<HourProps> = ({clock, changedHour, data, priority}) => {
     function getColor(priority: number) {
         let color = '';
         switch(true) {
-            case priority === 0: color = 'blueColor';
+            case priority === 1: color = 'blueColor';
             break;
-            case priority === 1: color = 'redColor';
+            case priority === 0: color = 'redColor';
             break;
             case priority === 2: color = 'greenColor';
             break;

@@ -1,4 +1,4 @@
-import React, { FC, MouseEvent, useEffect, ChangeEvent, useState } from "react";
+import React, { FC, MouseEvent, useEffect, ChangeEvent} from "react";
 import './Task.css';
 import trash from '../../sources/trash.png';
 
@@ -29,8 +29,8 @@ const Task: FC<TaskProps> = ({ data, i, deleteTask, addTask, onSelect, priority}
             <strong>{`${i + 1}.`}</strong>
             <input ref={myRef} type="text" value={data} name={`${i}`} onChange={(e) => addTask(e, mySelect.current ? +mySelect.current.value : 0)} />
             <select ref={mySelect} value={priority} onChange={onSelect} name={`${i}`}>
-                <option value={0}>Обычный</option>
-                <option value={1}>Важный</option>
+                <option value={0}>Важный</option>
+                <option value={1}>Обычный</option>
                 <option value={2}>Не важный</option>
             </select>
             <span className="task-trash" onClick={deleteTask}>

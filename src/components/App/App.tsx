@@ -172,13 +172,13 @@ const App: FC = () => {
         let newArr: dataType[] = [];
         if (index >= 0) {
             const newData = data[index];
-            newData.hours[changedHour].push({ index: newData.hours[changedHour].length, task: '',  priority: 0});
+            newData.hours[changedHour].push({ index: newData.hours[changedHour].length, task: '',  priority: 1});
             newData.date = changedDate;
             newArr = data.filter(el => el.date.getTime() !== changedDate.getTime());
             newArr.push(newData);
         } else {
             const newData = dataNative;
-            newData.hours[changedHour].push({ index: newData.hours[changedHour].length, task: '',  priority: 0});
+            newData.hours[changedHour].push({ index: newData.hours[changedHour].length, task: '',  priority: 1});
             newData.date = changedDate;
             newArr = [...data, newData];
         }

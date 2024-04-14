@@ -1,6 +1,9 @@
 import React, { FC, ChangeEvent, MouseEvent, RefObject } from "react";
 import './Month.css';
 
+import downBtn from '../../sources/down.png';
+import upBtn from '../../sources/upload.png';
+
 import { dayType } from "../types/dayType";
 import { timeType } from "../types/timeType";
 
@@ -16,19 +19,31 @@ interface MonthProps {
     chooseDate: (e: MouseEvent<HTMLElement>) => any,
     changedDate: Date,
     time: timeType,
-    data: dataType[]
+    data: dataType[],
+    /* scrollDate: (e: MouseEvent<HTMLElement>) => any */
 }
 
-const Month: FC<MonthProps> = ({ inputRef, handleChange, daysArr, currentDate, chooseDate, changedDate, time, data }) => {
+const Month: FC<MonthProps> = ({ inputRef, handleChange, daysArr, currentDate, chooseDate, changedDate, time, data, /* scrollDate */ }) => {
     
 
     return (
         <div className="Month">
             <div className="Month-title">
-                <h3>План на месяц</h3>
-                <input type="date" ref={inputRef} onChange={handleChange} value={currentDate} />
+                    <h3>План на месяц</h3>
+                    <input type="date" ref={inputRef} onChange={handleChange} value={currentDate} />
+                </div>
+            <div className="Month-header">
+                <b>{time.monthName[new Date(currentDate).getMonth()]}</b>
+                <div className="Month-btns">
+                    <button className="btn Month-btn" data-btn={'up'} /* onClick={scrollDate} */>
+                        <img src={upBtn} alt="up" />
+                    </button>
+                    <button className="btn Month-btn" data-btn={'down'} /* onClick={scrollDate} */>
+                        <img src={downBtn} alt="down" />
+                    </button>
+                </div>
             </div>
-            <strong>{time.monthName[new Date(currentDate).getMonth()]}</strong>
+            
             <div className="Month-days">
                 <b>Пн</b>
                 <b>Вт</b>

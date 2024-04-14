@@ -27,3 +27,30 @@
     height: auto;
     font-size: 0.8rem;
 }
+
+.Month-header {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+}
+
+.Month-btns {
+    width: 4rem;
+    display: flex;
+    justify-content: space-between;
+}
+
+.Month-btns>.btn {
+    width: 1.2rem;
+    height: 1.2rem;
+    cursor: pointer;
+}
+
+.Month-btns>.btn:hover {
+    background-color: #f4f3f3;
+}
+
+.Month-btns>.btn img {
+    width: 100%;
+    height: 100%;
+}

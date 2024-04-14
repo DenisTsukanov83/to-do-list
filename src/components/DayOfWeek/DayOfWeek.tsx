@@ -1,4 +1,4 @@
-import React, { FC, MouseEvent, useState } from "react";
+import React, {FC} from "react";
 
 import './DayOfWeek.css';
 
@@ -15,11 +15,6 @@ interface DayOfWeekProps {
 }
 
 const DayOfWeek: FC<DayOfWeekProps> = ({ dayName, tasksArr, cooseDateWeek, date, changedDate }) => {
-    
-
-    
-
-    
 
     const newTaskArr = tasksArr.sort((a, b) => {
         return a.priority - b.priority
@@ -32,8 +27,6 @@ const DayOfWeek: FC<DayOfWeekProps> = ({ dayName, tasksArr, cooseDateWeek, date,
             <b className="Week-day-title">{`${dayName}`}</b>
             <ul className="Week-day-list">
                 {arr.map((el, i) => {
-
-                    
                     
                     return (
                         <TaskOfWeek

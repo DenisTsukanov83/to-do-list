@@ -2,6 +2,7 @@ import React, { FC } from "react";
 
 import trueImg from '../../sources/check-true.png';
 import falseImg from '../../sources/check-false.png';
+import currentImg from '../../sources/check-current.png';
 
 interface TaskOfWeekProps {
     i: number,
@@ -28,19 +29,20 @@ const TaskOfWeek: FC<TaskOfWeekProps> = ({i, newTaskArr}) => {
         return color;
     }
 
+    
+
     function getImg(i: number) {
         let path = falseImg;
-        console.log(newTaskArr[i])
         if(newTaskArr[i]) {
             if(newTaskArr[i].status === 'done') {
                 path = trueImg;
             } else if(newTaskArr[i].status === 'missed') {
                 path = falseImg;
             } else if(newTaskArr[i].status === 'current') {
-                path = '';
+                path = currentImg;
             }
         } else {
-            path = '';
+            path = currentImg;
         }
         return path;
     }

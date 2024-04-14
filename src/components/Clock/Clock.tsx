@@ -1,19 +1,25 @@
-import React, {useState} from "react";
+import React, {useState, FC} from "react";
 
 import './Clock.css';
 
-function Clock() {
+interface ClockProps {
+
+}
+
+const Clock: FC<ClockProps> = () => {
     function getTime() {
         const hours = new Date().getHours()
         const minutes = new Date().getMinutes() < 10 ? '0' + +(new Date().getMinutes()) : new Date().getMinutes();
         const seconds = new Date().getSeconds() < 10 ? '0' + +(new Date().getSeconds()) : new Date().getSeconds();
-        const day = new Date().getDate();
+        /* const day = new Date().getDate();
         const month = new Date().getMonth() < 10 ? '0' + +(new Date().getMonth() + 1) : new Date().getMonth() + 1;
-        const year = new Date().getFullYear();
+        const year = new Date().getFullYear(); */
         return `${hours}:${minutes}:${seconds}`;
     }
     
     const [time, setTime] = useState(getTime());
+
+
 
     setInterval(() => {
         setTime(getTime())

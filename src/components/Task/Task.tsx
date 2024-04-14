@@ -8,12 +8,10 @@ interface TaskProps {
     deleteTask: (e: MouseEvent<HTMLElement>) => any,
     addTask: (e: ChangeEvent<HTMLInputElement>, priority: number) => any,
     onSelect: (e: ChangeEvent<HTMLSelectElement>) => any,
-    priority: number,
-    onCheck: (e: ChangeEvent<HTMLInputElement>) => any,
-    isDone: boolean
+    priority: number
 }
 
-const Task: FC<TaskProps> = ({ data, i, deleteTask, addTask, onSelect, priority, onCheck, isDone}) => {
+const Task: FC<TaskProps> = ({ data, i, deleteTask, addTask, onSelect, priority}) => {
     const myRef = React.createRef<HTMLInputElement>();
     const mySelect = React.createRef<HTMLSelectElement>();
     const myCheckbox = React.createRef<HTMLInputElement>();
@@ -33,10 +31,10 @@ const Task: FC<TaskProps> = ({ data, i, deleteTask, addTask, onSelect, priority,
                 <option value={1}>Обычный</option>
                 <option value={2}>Не важный</option>
             </select>
-            <input type="checkbox" className="task-check" ref={myCheckbox} onChange={onCheck} checked={isDone} name={`${i}`}/>
-            <span className="task-trash" onClick={deleteTask}>
+            <input type="checkbox" className="task-check" ref={myCheckbox} name={`${i}`}/>
+            <button className=" btn task-trash" onClick={deleteTask}>
                 <img src={trash} alt="" data-index={i} />
-            </span>
+            </button>
         </div>
 
     )

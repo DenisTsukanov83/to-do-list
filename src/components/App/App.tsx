@@ -202,7 +202,7 @@ const App: FC = () => {
             newData.date = changedDate;
             newArr = [...data, newData];
         }
-        statusCheck();
+
         setData(newArr);
 
 
@@ -226,8 +226,6 @@ const App: FC = () => {
         let newArr: dataType[] = [];
         newArr = data.filter(el => el.date.getTime() !== changedDate.getTime());
         newArr.push(newData);
-
-        
         setData(newArr);
     }
 
@@ -238,33 +236,9 @@ const App: FC = () => {
             const newData = data[index];
             newData.hours[changedHour] = newData.hours[changedHour].map((el, i) => {
                 if (i === +(e.target as HTMLSelectElement).name) {
-                    /* const newTask = newData.hours[changedHour][i].task;
-                    const newIsDone = newData.hours[changedHour][i].isDone;
-                    const newStatus = newData.hours[changedHour][i].status;
-                    return { index: newData.hours[changedHour].length, task: newTask, priority: +(e.target as HTMLSelectElement).value, isDone: newIsDone, status: newStatus } */
-                    el.priority = +(e.target as HTMLSelectElement).value;
-                    return el;
-                } else {
-                    return el;
-                }
-            });
-            newData.date = changedDate;
-            newArr = data.filter(el => el.date.getTime() !== changedDate.getTime());
-            newArr.push(newData);
-        }
-        setData(newArr);
-    }
-
-    function onCheck(e: ChangeEvent<HTMLInputElement>) {
-        const index = data.findIndex(el => el.date.getTime() === changedDate.getTime());
-        let newArr: dataType[] = [];
-        if (index >= 0) {
-            const newData = data[index];
-            newData.hours[changedHour] = newData.hours[changedHour].map((el, i) => {
-                if (i === +(e.target as HTMLInputElement).name) {
                     const newTask = newData.hours[changedHour][i].task;
-                    const newPriority = newData.hours[changedHour][i].priority;
-                    return { index: newData.hours[changedHour].length, task: newTask, priority: newPriority, isDone: (e.target as HTMLInputElement).checked, status: 'current' }
+                    const newIsDone = newData.hours[changedHour][i].isDone;
+                    return { index: newData.hours[changedHour].length, task: newTask, priority: +(e.target as HTMLSelectElement).value, isDone: newIsDone, status: 'current' }
                 } else {
                     return el;
                 }
@@ -273,50 +247,10 @@ const App: FC = () => {
             newArr = data.filter(el => el.date.getTime() !== changedDate.getTime());
             newArr.push(newData);
         }
-        statusCheck()
-        setData(newArr);
-        
-    }
-
-    function statusCheck() {
-        let newArr: dataType[] = data;
-        newArr.map(el => {
-            
-            const arr = Object.entries(el.hours).map((hour, i) => {
-                const newHour = hour;
-                let newArr = [];
-                const matches = /\d\d/.exec(newHour[0]);
-                const h = matches ? matches[0] : '';
-                if(new Date().getTime() > new Date(el.date.setHours(+h)).getTime()){
-                    
-                    if(newHour[1].length) {
-                        newArr = newHour[1].map(el => {
-                            let newEl = el;
-                            newEl.status = newEl.isDone ? 'done' : 'missed';
-                            return newEl;
-                        })
-                    }
-                } else {
-                    if(newHour[1].length) {
-                        newArr = newHour[1].map(el => {
-                            let newEl = el;
-                            newEl.status = newEl.isDone ? 'done' : 'current';
-                            return newEl;
-                        })
-                    }
-                }
-                
-                return hour;
-            })
-            
-            return arr;
-        })
         setData(newArr);
     }
 
-    useEffect(() => {
-        
-    })
+
 
 
     return (
@@ -356,8 +290,7 @@ const App: FC = () => {
                 data={data}
                 addTask={addTask}
                 deleteTask={deleteTask}
-                onSelect={onSelect} 
-                onCheck={onCheck}/>
+                onSelect={onSelect} />
         </div>
     );
 }

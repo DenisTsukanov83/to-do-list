@@ -1,4 +1,4 @@
-import React, {FC, MouseEvent} from "react";
+import React, {FC} from "react";
 
 import './Week.css';
 
@@ -32,19 +32,28 @@ const Week: FC<WeekProps>  = ({time, getDaysArr, numberWeek, data, dataNative, c
             <div className="Week-calendar">
                 {
                     time.dayName.map((el, i) => {
+                        
                         let newData = dataNative;
-                        data.forEach(el => {
-                            if(el.date.getTime() === newDaysArr[i].date.getTime()) {
-                                newData = el;
+                        data.forEach(elem => {
+                            
+                            if(newDaysArr[i]) {
+                                if(elem.date.getTime() === newDaysArr[i].date.getTime()) {
+                                    newData = elem;
+                                }
                             }
                         });
                         let tasksArr: { index: number, task: string, priority: number, isDone: boolean, status: string}[][] = [];
-                        if(Object.keys(newData).length) {
+                        /* if(Object.keys(newData.hours).length) {
                             for(let key in newData.hours) {
                                 tasksArr.push(newData.hours[key])
                             }
+                        } */
+                        /* console.log(newData) */
+                        for(let key in newData.hours) {
+                            tasksArr.push(newData.hours[key])
                         }
-                        return <DayOfWeek key={i} dayName={el} tasksArr={tasksArr.flat()} cooseDateWeek={cooseDateWeek} date={newDaysArr[i].date} changedDate={changedDate}/>
+                        return <DayOfWeek key={i} dayName={el} tasksArr={tasksArr.flat()} cooseDateWeek={cooseDateWeek} date={newDaysArr[i] ? newDaysArr[i].date : new Date()} changedDate={changedDate}/>
+                        
                     })
                 }
             </div>

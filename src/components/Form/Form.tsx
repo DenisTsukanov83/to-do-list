@@ -15,11 +15,10 @@ interface FormProps {
     data: dataType[],
     addTask: (e: ChangeEvent<HTMLInputElement>, priority: number) => any,
     deleteTask: (e: MouseEvent<HTMLElement>) => any,
-    onSelect: (e: ChangeEvent<HTMLSelectElement>) => any,
-    onCheck: (e: ChangeEvent<HTMLInputElement>) => any
+    onSelect: (e: ChangeEvent<HTMLSelectElement>) => any
 }
 
-const Form: FC<FormProps> = ({ changedDate, changedHour, time, addData, data, addTask, deleteTask, onSelect, onCheck}) => {
+const Form: FC<FormProps> = ({ changedDate, changedHour, time, addData, data, addTask, deleteTask, onSelect}) => {
     const index = data.findIndex(el => el.date.getTime() === changedDate.getTime());
     const inputsArr = index >= 0 ? data[index].hours[changedHour] : [];
 
@@ -35,12 +34,10 @@ const Form: FC<FormProps> = ({ changedDate, changedHour, time, addData, data, ad
                                 deleteTask={deleteTask} 
                                 addTask={addTask} 
                                 onSelect={onSelect}
-                                priority={data[index].hours[changedHour][i].priority}
-                                onCheck={onCheck}
-                                isDone={el.isDone}/>
+                                priority={data[index].hours[changedHour][i].priority}/>
                 })}
             </div>
-            <button onClick={addData}>Добавить задачу</button>
+            <button className="Form-add" onClick={addData}>Добавить задачу</button>
         </div>
     )
 }

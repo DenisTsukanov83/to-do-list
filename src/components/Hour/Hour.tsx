@@ -10,7 +10,7 @@ interface HourProps {
 }
 
 const Hour: FC<HourProps> = ({clock, changedHour, data, priority}) => {
-    
+    console.log(data)
 
     function getColor(priority: number) {
         let color = '';

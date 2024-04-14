@@ -26,3 +26,8 @@ body, html {
 .changed {
     background-color: #dedede;
 }
+
+.btn {
+    border: none;
+    background-color: transparent;
+}

@@ -4,8 +4,9 @@
     gap: 0.3rem;
 }
 
-.Form button {
+.Form-add {
     width: 6.6rem;
     height: auto;
     font-size: 0.8rem;
+    cursor: pointer;
 }

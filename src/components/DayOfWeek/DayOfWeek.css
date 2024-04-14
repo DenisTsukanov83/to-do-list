@@ -1,10 +1,11 @@
 .Week-day {
-    width: 12rem;
+    width: 10rem;
     cursor: pointer;
+    overflow: hidden;
 }
 
 .Week-day:hover {
-    background-color: #929292;
+    background-color: #e9e9e9;
 }
 
 .Week-day-list {
@@ -16,7 +17,7 @@
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    margin-top: 0.2rem;
+    margin-top: 0.1rem;
 }
 
 .Week-day-check {
@@ -27,9 +28,9 @@
 
 .Week-day-data {
     width: 100%;
-    height: 0.9rem;
+    height: 1.1rem;
     border-bottom: 0.06rem solid black;
     font-family: BadScript;
-    font-size: 0.6rem;
+    font-size: 0.7rem;
     font-weight: 900;
 }

@@ -1,13 +1,16 @@
-import React, { FC } from "react";
+import React, { FC, MouseEvent } from "react";
 
 import './DayOfWeek.css';
 
 interface DayOfWeekProps {
     dayName: string
-    tasksArr: { index: number; task: string; priority: number}[]
+    tasksArr: { index: number; task: string; priority: number}[],
+    cooseDateWeek: (date: Date) => any,
+    date: Date,
+    changedDate: Date
 }
 
-const DayOfWeek: FC<DayOfWeekProps> = ({ dayName, tasksArr }) => {
+const DayOfWeek: FC<DayOfWeekProps> = ({ dayName, tasksArr, cooseDateWeek, date, changedDate }) => {
     function getColor(priority: number) {
         let color = '';
         switch(true) {
@@ -26,11 +29,10 @@ const DayOfWeek: FC<DayOfWeekProps> = ({ dayName, tasksArr }) => {
         return a.priority - b.priority
     })
 
-    console.log(tasksArr)
-
     const arr = ['', '', '', '', '', '', ''];
+    const cangeClass = date.getTime() === new Date(changedDate.setHours(0, 0, 0, 0)).getTime() ? 'changed' : '';
     return (
-        <div className="Week-day">
+        <div className={`Week-day ${cangeClass}`} onClick={() => cooseDateWeek(date)}>
             <b className="Week-day-title">{`${dayName}`}</b>
             <ul className="Week-day-list">
                 {arr.map((el, i) => {

@@ -22,3 +22,7 @@ body, html {
 .greenColor {
     color: green;
 }
+
+.changed {
+    background-color: #dedede;
+}

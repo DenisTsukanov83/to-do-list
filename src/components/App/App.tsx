@@ -59,7 +59,7 @@ const App: FC = () => {
 
     // Returns the ISO week of the date.
     // eslint-disable-next-line no-extend-native
-    function getNumberWeek (newDate: Date) {
+    function getNumberWeek(newDate: Date) {
         var date = new Date(newDate.getTime());
         date.setHours(0, 0, 0, 0);
         // Thursday in current week decides the year.
@@ -76,6 +76,18 @@ const App: FC = () => {
         setChangedDate(new Date(e.target.value));
     }
 
+    function getNameDay(index: number) {
+        switch(true) {
+            case index === 0: return time.dayName[6];
+            case index === 1: return time.dayName[0];
+            case index === 2: return time.dayName[1];
+            case index === 3: return time.dayName[2];
+            case index === 4: return time.dayName[3];
+            case index === 5: return time.dayName[4];
+            case index === 6: return time.dayName[5];
+        }
+    }
+
     function getDaysArr() {
         let daysArr = [];
         let j = time.indexFirstDay;
@@ -85,7 +97,8 @@ const App: FC = () => {
                 id: `last-${i}`,
                 status: 'last',
                 date: new Date(time.currentYear, time.currentMonth - 1, time.lastDateLastMonth - j),
-                numberWeek: getNumberWeek(new Date(time.currentYear, time.currentMonth - 1, time.lastDateLastMonth - j))
+                numberWeek: getNumberWeek(new Date(time.currentYear, time.currentMonth - 1, time.lastDateLastMonth - j)),
+                nameDay: getNameDay(new Date(time.currentYear, time.currentMonth - 1, time.lastDateLastMonth - j).getDay())
             });
         }
         for (let i = 0; i < time.lastDateCurrentMonth; i++) {
@@ -93,7 +106,8 @@ const App: FC = () => {
                 id: `current-${i}`,
                 status: 'current',
                 date: new Date(time.currentYear, time.currentMonth, i + 1),
-                numberWeek: getNumberWeek(new Date(time.currentYear, time.currentMonth, i + 1))
+                numberWeek: getNumberWeek(new Date(time.currentYear, time.currentMonth, i + 1)),
+                nameDay: getNameDay(new Date(time.currentYear, time.currentMonth, i + 1).getDay())
             });
         }
         for (let i = 0; i < 42 - time.indexFirstDay - time.lastDateCurrentMonth; i++) {
@@ -101,7 +115,8 @@ const App: FC = () => {
                 id: `next-${i}`,
                 status: 'next',
                 date: new Date(time.currentYear, time.currentMonth + 1, 1 + i),
-                numberWeek: getNumberWeek(new Date(time.currentYear, time.currentMonth + 1, 1 + i))
+                numberWeek: getNumberWeek(new Date(time.currentYear, time.currentMonth + 1, 1 + i)),
+                nameDay: getNameDay(new Date(time.currentYear, time.currentMonth + 1, 1 + i).getDay())
             });
         }
         return daysArr;
@@ -119,6 +134,11 @@ const App: FC = () => {
             setCurrentDate(date ? `${date.date.getFullYear()}-${date.date.getMonth() + 1 < 10 ? '0' + (date.date.getMonth() + 1) : date.date.getMonth() + 1}-${date.date.getDate() < 10 ? '0' + date.date.getDate() : date.date.getDate()}` : '');
             setNumberWeek(date ? date.numberWeek : 1)
         }
+    }
+
+    function cooseDateWeek(date: Date) {
+        setChangedDate(date);
+        setCurrentDate(`${new Date(date).getFullYear()}-${new Date(date).getMonth() + 1 < 10 ? '0' + (new Date(date).getMonth() + 1) : new Date(date).getMonth() + 1}-${new Date(date).getDate() < 10 ? '0' + new Date(date).getDate() : new Date(date).getDate()}`);
     }
 
     const [changedHour, setChangedHour] = useState('07:00');
@@ -172,13 +192,13 @@ const App: FC = () => {
         let newArr: dataType[] = [];
         if (index >= 0) {
             const newData = data[index];
-            newData.hours[changedHour].push({ index: newData.hours[changedHour].length, task: '',  priority: 1});
+            newData.hours[changedHour].push({ index: newData.hours[changedHour].length, task: '', priority: 1 });
             newData.date = changedDate;
             newArr = data.filter(el => el.date.getTime() !== changedDate.getTime());
             newArr.push(newData);
         } else {
             const newData = dataNative;
-            newData.hours[changedHour].push({ index: newData.hours[changedHour].length, task: '',  priority: 1});
+            newData.hours[changedHour].push({ index: newData.hours[changedHour].length, task: '', priority: 1 });
             newData.date = changedDate;
             newArr = [...data, newData];
         }
@@ -210,17 +230,15 @@ const App: FC = () => {
         setData(newArr);
     }
 
-
-
     function onSelect(e: ChangeEvent<HTMLSelectElement>) {
         const index = data.findIndex(el => el.date.getTime() === changedDate.getTime());
         let newArr: dataType[] = [];
         if (index >= 0) {
             const newData = data[index];
             newData.hours[changedHour] = newData.hours[changedHour].map((el, i) => {
-                if(i === +(e.target as HTMLSelectElement).name) {
+                if (i === +(e.target as HTMLSelectElement).name) {
                     const newTask = newData.hours[changedHour][i].task
-                    return { index: newData.hours[changedHour].length, task: newTask,  priority: +(e.target as HTMLSelectElement).value}
+                    return { index: newData.hours[changedHour].length, task: newTask, priority: +(e.target as HTMLSelectElement).value }
                 } else {
                     return el;
                 }
@@ -236,24 +254,24 @@ const App: FC = () => {
 
     return (
         <div className="App">
-            <div className='App-calendar'>
-                <Month
-                    inputRef={inputRef}
-                    handleChange={handleChange}
-                    daysArr={getDaysArr()}
-                    currentDate={currentDate}
-                    chooseDate={chooseDate}
-                    changedDate={changedDate}
-                    time={time}
-                    data={data} />
+            <Month
+                inputRef={inputRef}
+                handleChange={handleChange}
+                daysArr={getDaysArr()}
+                currentDate={currentDate}
+                chooseDate={chooseDate}
+                changedDate={changedDate}
+                time={time}
+                data={data} />
 
-                <Week 
-                    time={time}
-                    getDaysArr={getDaysArr}
-                    numberWeek={numberWeek}
-                    data={data}
-                    dataNative={dataNative}/>
-            </div>
+            <Week
+                time={time}
+                getDaysArr={getDaysArr}
+                numberWeek={numberWeek}
+                data={data}
+                dataNative={dataNative}
+                cooseDateWeek={cooseDateWeek}
+                changedDate={changedDate}/>
 
 
             <Tasks
@@ -270,8 +288,8 @@ const App: FC = () => {
                 addData={addData}
                 data={data}
                 addTask={addTask}
-                deleteTask={deleteTask} 
-                onSelect={onSelect}/>
+                deleteTask={deleteTask}
+                onSelect={onSelect} />
         </div>
     );
 }

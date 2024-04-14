@@ -1,4 +1,4 @@
-import React, {FC} from "react";
+import React, {FC, MouseEvent} from "react";
 
 import './Week.css';
 
@@ -17,12 +17,14 @@ interface WeekProps {
         numberWeek: number;
     }[],
     data: dataType[],
-    dataNative: dataType
+    dataNative: dataType,
+    cooseDateWeek: (date: Date) => any,
+    changedDate: Date
 }
 
-const Week: FC<WeekProps>  = ({time, getDaysArr, numberWeek, data, dataNative}) => {
+const Week: FC<WeekProps>  = ({time, getDaysArr, numberWeek, data, dataNative, cooseDateWeek, changedDate}) => {
     const newDaysArr = getDaysArr().filter(el => el.numberWeek === numberWeek);
-    
+    console.log(newDaysArr)
     return (
         <div className="Week">
             <div className="Week-title">
@@ -44,7 +46,7 @@ const Week: FC<WeekProps>  = ({time, getDaysArr, numberWeek, data, dataNative}) 
                             }
                         }
                         
-                        return <DayOfWeek key={i} dayName={el} tasksArr={tasksArr.flat()}/>
+                        return <DayOfWeek key={i} dayName={el} tasksArr={tasksArr.flat()} cooseDateWeek={cooseDateWeek} date={newDaysArr[i].date} changedDate={changedDate}/>
                     })
                 }
             </div>

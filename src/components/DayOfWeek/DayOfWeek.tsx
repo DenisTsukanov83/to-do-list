@@ -8,7 +8,7 @@ import TaskOfWeek from "../TaskOfWeek/TaskOfWeek";
 
 interface DayOfWeekProps {
     dayName: string
-    tasksArr: { index: number; task: string; priority: number, isDone: boolean}[],
+    tasksArr: { index: number; task: string; priority: number, isDone: boolean, status: string}[],
     cooseDateWeek: (date: Date) => any,
     date: Date,
     changedDate: Date

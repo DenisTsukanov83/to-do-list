@@ -38,7 +38,7 @@ const Week: FC<WeekProps>  = ({time, getDaysArr, numberWeek, data, dataNative, c
                                 newData = el;
                             }
                         });
-                        let tasksArr: { index: number, task: string, priority: number, isDone: boolean}[][] = [];
+                        let tasksArr: { index: number, task: string, priority: number, isDone: boolean, status: string}[][] = [];
                         if(Object.keys(newData).length) {
                             for(let key in newData.hours) {
                                 tasksArr.push(newData.hours[key])

@@ -10,6 +10,7 @@ interface TaskOfWeekProps {
         task: string;
         priority: number;
         isDone: boolean;
+        status: string
     }[]
 }
 
@@ -28,13 +29,18 @@ const TaskOfWeek: FC<TaskOfWeekProps> = ({i, newTaskArr}) => {
     }
 
     function getImg(i: number) {
-        let path = falseImg
+        let path = falseImg;
+        console.log(newTaskArr[i])
         if(newTaskArr[i]) {
-            if(newTaskArr[i].isDone) {
+            if(newTaskArr[i].status === 'done') {
                 path = trueImg;
-            } else {
+            } else if(newTaskArr[i].status === 'missed') {
                 path = falseImg;
+            } else if(newTaskArr[i].status === 'current') {
+                path = '';
             }
+        } else {
+            path = '';
         }
         return path;
     }

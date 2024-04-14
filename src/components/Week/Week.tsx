@@ -24,7 +24,6 @@ interface WeekProps {
 
 const Week: FC<WeekProps>  = ({time, getDaysArr, numberWeek, data, dataNative, cooseDateWeek, changedDate}) => {
     const newDaysArr = getDaysArr().filter(el => el.numberWeek === numberWeek);
-    console.log(newDaysArr)
     return (
         <div className="Week">
             <div className="Week-title">
@@ -39,13 +38,12 @@ const Week: FC<WeekProps>  = ({time, getDaysArr, numberWeek, data, dataNative, c
                                 newData = el;
                             }
                         });
-                        let tasksArr: { index: number; task: string; priority: number}[][] = [];
+                        let tasksArr: { index: number, task: string, priority: number, isDone: boolean}[][] = [];
                         if(Object.keys(newData).length) {
                             for(let key in newData.hours) {
                                 tasksArr.push(newData.hours[key])
                             }
                         }
-                        
                         return <DayOfWeek key={i} dayName={el} tasksArr={tasksArr.flat()} cooseDateWeek={cooseDateWeek} date={newDaysArr[i].date} changedDate={changedDate}/>
                     })
                 }

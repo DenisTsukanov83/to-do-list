@@ -224,10 +224,7 @@ const App: FC = () => {
             newData.date = changedDate;
             newArr = [...data, newData];
         }
-        console.log(newData)
         setData(newArr);
-
-
     }
 
     function addTask(e: ChangeEvent<HTMLInputElement>, priority: number) {
@@ -275,7 +272,6 @@ const App: FC = () => {
 
     function scrollDate(e: MouseEvent<HTMLElement>) {
         const btn = (e.target as HTMLElement).closest('.Month-btn');
-        console.log(String(changedDate.getMonth()))
         let year = changedDate.getFullYear();
         let month = changedDate.getMonth();
         let date = changedDate.getDate();
@@ -299,6 +295,26 @@ const App: FC = () => {
 
         setChangedDate(newDate);
         setCurrentDate(`${newDate.getFullYear()}-${newDate.getMonth() + 1 < 10 ? '0' + (newDate.getMonth() + 1) : newDate.getMonth() + 1}-${newDate.getDate() < 10 ? '0' + newDate.getDate() : newDate.getDate()}`)
+    }
+
+    function onCheck(e: ChangeEvent<HTMLInputElement>) {
+        const index = data.findIndex(el => el.date.getTime() === changedDate.getTime());
+        let newArr: dataType[] = [];
+        if (index >= 0) {
+            const newData = data[index];
+            newData.hours[changedHour] = newData.hours[changedHour].map((el, i) => {
+                if (i === +(e.target as HTMLInputElement).name) {
+                    el.isDone = (e.target as HTMLInputElement).checked;
+                    return el
+                } else {
+                    return el;
+                }
+            });
+            newData.date = changedDate;
+            newArr = data.filter(el => el.date.getTime() !== changedDate.getTime());
+            newArr.push(newData);
+        }
+        setData(newArr);
     }
 
 
@@ -342,7 +358,8 @@ const App: FC = () => {
                 data={data}
                 addTask={addTask}
                 deleteTask={deleteTask}
-                onSelect={onSelect} />
+                onSelect={onSelect} 
+                onCheck={onCheck}/>
         </div>
     );
 }

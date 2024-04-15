@@ -38,7 +38,7 @@ const Task: FC<TaskProps> = ({ data, i, deleteTask, addTask, onSelect, priority,
                 <option value={1}>Обычный</option>
                 <option value={2}>Не важный</option>
             </select>
-            <input type="checkbox" className="task-check" ref={myCheckbox} name={`${data.index}`} onChange={onCheck}/>
+            <input type="checkbox" className="task-check" ref={myCheckbox} name={`${data.index}`} onChange={onCheck} checked={data.isDone}/>
             <button className=" btn task-trash" onClick={deleteTask}>
                 <img src={trash} alt="" data-index={i} />
             </button>

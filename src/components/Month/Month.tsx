@@ -24,14 +24,13 @@ interface MonthProps {
 }
 
 const Month: FC<MonthProps> = ({ inputRef, handleChange, daysArr, currentDate, chooseDate, changedDate, time, data, scrollDate }) => {
-    
 
     return (
         <div className="Month">
             <div className="Month-title">
-                    <h3>План на месяц</h3>
-                    <input type="date" ref={inputRef} onChange={handleChange} value={currentDate} />
-                </div>
+                <h3>План на месяц</h3>
+                <input type="date" ref={inputRef} onChange={handleChange} value={currentDate} />
+            </div>
             <div className="Month-header">
                 <b>{time.monthName[new Date(currentDate).getMonth()]}</b>
                 <div className="Month-btns">
@@ -43,27 +42,36 @@ const Month: FC<MonthProps> = ({ inputRef, handleChange, daysArr, currentDate, c
                     </button>
                 </div>
             </div>
-            
-            <div className="Month-days">
-                <b>Пн</b>
-                <b>Вт</b>
-                <b>Ср</b>
-                <b>Чт</b>
-                <b>Пт</b>
-                <b>Сб</b>
-                <b>Вс</b>
-            </div>
-            <div className="month-calendar" onClick={chooseDate}>
-                {daysArr.map((el, i) => {
-                    const index = data.findIndex(el => el.date.getTime() === daysArr[i].date.getTime());
-                    let numberOfTasks = 0;
-                    if(index >= 0) {
-                        for(let key in data[index].hours) {
-                            numberOfTasks += data[index].hours[key].length
+            <div className="Month-wrapper">
+                <div className="Month-weeks">
+                    <b>{daysArr[0].numberWeek}</b>
+                    <b>{daysArr[7].numberWeek}</b>
+                    <b>{daysArr[14].numberWeek}</b>
+                    <b>{daysArr[21].numberWeek}</b>
+                    <b>{daysArr[28].numberWeek}</b>
+                    <b>{daysArr[35].numberWeek}</b>
+                </div>
+                <div className="Month-days">
+                    <b>Пн</b>
+                    <b>Вт</b>
+                    <b>Ср</b>
+                    <b>Чт</b>
+                    <b>Пт</b>
+                    <b>Сб</b>
+                    <b>Вс</b>
+                </div>
+                <div className="Month-calendar" onClick={chooseDate}>
+                    {daysArr.map((el, i) => {
+                        const index = data.findIndex(el => el.date.getTime() === daysArr[i].date.getTime());
+                        let numberOfTasks = 0;
+                        if (index >= 0) {
+                            for (let key in data[index].hours) {
+                                numberOfTasks += data[index].hours[key].length
+                            }
                         }
-                    }
-                    return <Day key={i} daysArr={daysArr[i]} changedDate={changedDate} numberOfTasks={numberOfTasks}/>
-                })}
+                        return <Day key={i} daysArr={daysArr[i]} changedDate={changedDate} numberOfTasks={numberOfTasks} />
+                    })}
+                </div>
             </div>
         </div>
     )

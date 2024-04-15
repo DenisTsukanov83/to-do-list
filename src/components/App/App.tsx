@@ -160,6 +160,33 @@ const App: FC = () => {
     //     return argument;
     // }
 
+    useEffect(() => {
+        localStorage.dataToDoList = JSON.stringify(data);
+    })
+
+    /* console.log(JSON.parse(localStorage.dataToDoList)) */
+
+    function getDataFromLocalStorage() {
+        
+
+        if(localStorage.dataToDoList) {
+            const newDate = JSON.parse(localStorage.dataToDoList);
+            console.log(1)
+            newDate.map((el: dataType) => {
+                const date = el.date;
+                return el.date = new Date(date);
+            });
+    
+            return newDate;
+        } else {
+            console.log(2)
+            return [];
+        }
+    }
+
+    console.log(getDataFromLocalStorage())
+
+
 
     let dataNative: dataType = {
         id: 0,
@@ -184,7 +211,9 @@ const App: FC = () => {
         }
     }
 
-    let [data, setData] = useState<dataType[]>([]);
+    /* let [data, setData] = useState<dataType[]>([]); */
+    let [data, setData] = useState<dataType[]>(getDataFromLocalStorage());
+    
 
     function getIndex(arr: number[]) {
         for(let i = 0; i <= arr.length; i++) {

@@ -32,10 +32,8 @@ const Week: FC<WeekProps>  = ({time, getDaysArr, numberWeek, data, dataNative, c
             <div className="Week-calendar">
                 {
                     time.dayName.map((el, i) => {
-                        
                         let newData = dataNative;
                         data.forEach(elem => {
-                            
                             if(newDaysArr[i]) {
                                 if(elem.date.getTime() === newDaysArr[i].date.getTime()) {
                                     newData = elem;
@@ -43,12 +41,6 @@ const Week: FC<WeekProps>  = ({time, getDaysArr, numberWeek, data, dataNative, c
                             }
                         });
                         let tasksArr: { index: number, task: string, priority: number, isDone: boolean, status: string}[][] = [];
-                        /* if(Object.keys(newData.hours).length) {
-                            for(let key in newData.hours) {
-                                tasksArr.push(newData.hours[key])
-                            }
-                        } */
-                        /* console.log(newData) */
                         for(let key in newData.hours) {
                             tasksArr.push(newData.hours[key])
                         }

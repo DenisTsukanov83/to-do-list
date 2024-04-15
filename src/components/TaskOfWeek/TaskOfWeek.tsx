@@ -16,7 +16,6 @@ interface TaskOfWeekProps {
 }
 
 const TaskOfWeek: FC<TaskOfWeekProps> = ({newTaskArr, i}) => {
-    /* console.log(newTaskArr) */
     function getColor(priority: number) {
         let color = '';
         switch(true) {
@@ -32,13 +31,24 @@ const TaskOfWeek: FC<TaskOfWeekProps> = ({newTaskArr, i}) => {
 
     function getImg() {
         let path = falseImg;
-        if(newTaskArr) {
+        /* if(newTaskArr) {
             if(newTaskArr.status === 'done') {
                 path = trueImg;
             } else if(newTaskArr.status === 'missed') {
                 path = falseImg;
             } else if(newTaskArr.status === 'current') {
                 path = currentImg;
+            }
+        } else {
+            path = currentImg;
+        } */
+        if(newTaskArr) {
+            switch(true) {
+                case newTaskArr.status === 'missed' && !newTaskArr.isDone: path = falseImg;
+                break;
+                case newTaskArr.isDone === true: path = trueImg;
+                break;
+                case newTaskArr.status === "current" && !newTaskArr.isDone: path = currentImg;
             }
         } else {
             path = currentImg;

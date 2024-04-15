@@ -54,7 +54,9 @@ const Form: FC<FormProps> = ({ changedDate, changedHour, time, addData, data, ad
                 changedTask={changedTask}
                 data={data}
                 time={time}
-                addText={addText}/>
+                addText={addText}
+                changedDate={changedDate}
+                changedHour={changedHour}/>
         </div>
     )
 }

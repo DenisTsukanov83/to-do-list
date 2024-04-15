@@ -49,7 +49,7 @@ const App: FC = () => {
             return new Date(currentDate).getMonth();
         },
         monthName: [
-            'январь', 'февраль', 'март', 'апрель', 'май', 'июнь', 'июль', 'август', 'сентябрь', 'октябрь', 'ноябрь', 'декабрь'
+            'Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'
         ],
         monthName2: [
             'января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'
@@ -299,9 +299,15 @@ const App: FC = () => {
         if (index >= 0) {
             const newData = data[index];
             newData.hours[changedHour] = newData.hours[changedHour].map((el, i) => {
-                if (i === +(e.target as HTMLInputElement).name) {
+                if (el.index === +(e.target as HTMLInputElement).name) {
                     el.isDone = (e.target as HTMLInputElement).checked;
-                    return el
+                    const newTask = newData.hours[changedHour][i].task;
+                    const newStatus = newData.hours[changedHour][i].status;
+                    const newIndex = newData.hours[changedHour][i].index;
+                    const newText = newData.hours[changedHour][i].text;
+                    const newPriority = newData.hours[changedHour][i].priority
+                    return { index: newIndex, task: newTask, priority: newPriority, isDone: (e.target as HTMLInputElement).checked, status: newStatus, text: newText }
+                    
                 } else {
                     return el;
                 }
@@ -326,7 +332,7 @@ const App: FC = () => {
     function deleteTask(e: MouseEvent<HTMLElement>) {
         const index = data.findIndex(el => el.date.getTime() === changedDate.getTime());
         const newData = data[index];
-        const dataIndex: string | undefined = (e.target as HTMLElement).dataset.index
+        const dataIndex = (e.target as HTMLElement).dataset.index
         if (dataIndex) {
             newData.hours[changedHour] = newData.hours[changedHour].filter((el, i) => i !== +dataIndex);
         }
@@ -338,17 +344,19 @@ const App: FC = () => {
     }
 
     function onChangedTask(e: MouseEvent<HTMLElement>) {
-        const el = (e.target as HTMLElement).closest('.task');
-        let index = (el as HTMLElement).dataset.task;
-        setChangedTask({date: changedDate, hour: changedHour, index: index ? +index : 0});
-        
+        if((e.target as HTMLElement).closest('.task')) {
+            const el = (e.target as HTMLElement).closest('.task');
+            let indexTask = (el as HTMLElement).dataset.task;
+            setChangedTask({date: changedDate, hour: changedHour, index: indexTask ? +indexTask : 0});
+        }
+        if((e.target as HTMLElement).closest('.Hour-task')) {
+            const el = (e.target as HTMLElement).closest('.Hour-task');
+            let indexTask = (el as HTMLElement).dataset.task;
+            setChangedTask({date: changedDate, hour: changedHour, index: indexTask ? +indexTask : 0});
+        }
     }
 
     function addText(e: ChangeEvent<HTMLTextAreaElement>) {
-        /* const index = data.findIndex(el => el.date.getTime() === changedTask.date.getTime());
-        const newData = data[index];
-        newData.hours[changedTask.hour][changedTask.index].text = (e.target as HTMLTextAreaElement).value;
-        setData([...data, newData]); */
         const index = data.findIndex(el => el.date.getTime() === changedTask.date.getTime());
         let newArr: dataType[] = [];
         if (index >= 0) {
@@ -403,7 +411,8 @@ const App: FC = () => {
                 changedDate={changedDate}
                 chooseHour={chooseHour}
                 changedHour={changedHour}
-                data={data} />
+                data={data} 
+                onChangedTask={onChangedTask}/>
 
             <Form
                 changedDate={changedDate}

@@ -1,11 +1,15 @@
 .Form {
-    width: max-content;
+    width: 23rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .Form-tasks {
     display: flex;
     flex-direction: column;
     gap: 0.3rem;
+    margin-bottom: 1rem;
 }
 
 .Form-add {
@@ -16,5 +20,9 @@
 }
 
 .Form h3 {
-    width: 100%;
+    width: 20rem;
+}
+
+.Form-add {
+    width: 5rem;
 }

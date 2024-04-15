@@ -3,6 +3,9 @@ import './Month.css';
 
 import downBtn from '../../sources/down.png';
 import upBtn from '../../sources/upload.png';
+import trueImg from '../../sources/check-true.png';
+import falseImg from '../../sources/check-false.png';
+import currentImg from '../../sources/check-current.png';
 
 import { dayType } from "../types/dayType";
 import { timeType } from "../types/timeType";
@@ -72,6 +75,29 @@ const Month: FC<MonthProps> = ({ inputRef, handleChange, daysArr, currentDate, c
                         return <Day key={i} daysArr={daysArr[i]} changedDate={changedDate} numberOfTasks={numberOfTasks} />
                     })}
                 </div>
+            </div>
+            <div className="info">
+                <div className="info-item">
+                    <div>
+                        <img src={trueImg} alt="" />
+                    </div>
+                    <div>Выполнено</div>
+                </div>
+                <div className="info-item">
+                    <div>
+                        <img src={falseImg} alt="" />
+                    </div>
+                    <div>Невыполнено</div>
+                </div>
+                <div className="info-item">
+                    <div>
+                        <img src={currentImg} alt="" />
+                    </div>
+                    <div>Нет статуса</div>
+                </div>
+                <div className="info-item redColor">Важный</div>
+                <div className="info-item blueColor">Обычный</div>
+                <div className="info-item greenColor">Не важный</div>
             </div>
         </div>
     )

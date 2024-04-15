@@ -250,6 +250,34 @@ const App: FC = () => {
         setData(newArr);
     }
 
+    function scrollDate(e: MouseEvent<HTMLElement>) {
+        const btn = (e.target as HTMLElement).closest('.Month-btn');
+        console.log(String(changedDate.getMonth()))
+        let year = changedDate.getFullYear();
+        let month = changedDate.getMonth();
+        let date = changedDate.getDate();
+        let newDate = changedDate;
+        function iteration(year: number, month: number) {
+            let obj : {year: number, month: number} = {year: 0, month: 0};
+            if(month === 0) {
+                obj = {year: year - 1, month: 12};
+            } else if(month === 13) {
+                obj = {year: year + 1, month: 1};
+            } else {
+                obj = {year: year, month: month};
+            }
+            return obj;
+        }
+        if((btn as HTMLElement).dataset.btn === 'up') {
+            newDate = new Date(iteration(year, month + 1).year, iteration(year, month + 1).month, date);
+        }  else {
+            newDate = new Date(iteration(year, month - 1).year, iteration(year, month - 1).month, date);
+        }
+
+        setChangedDate(newDate);
+        setCurrentDate(`${newDate.getFullYear()}-${newDate.getMonth() + 1 < 10 ? '0' + (newDate.getMonth() + 1) : newDate.getMonth() + 1}-${newDate.getDate() < 10 ? '0' + newDate.getDate() : newDate.getDate()}`)
+    }
+
 
 
 
@@ -263,7 +291,8 @@ const App: FC = () => {
                 chooseDate={chooseDate}
                 changedDate={changedDate}
                 time={time}
-                data={data} />
+                data={data} 
+                scrollDate={scrollDate}/>
 
             <Week
                 time={time}

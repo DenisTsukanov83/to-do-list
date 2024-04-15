@@ -20,10 +20,10 @@ interface MonthProps {
     changedDate: Date,
     time: timeType,
     data: dataType[],
-    /* scrollDate: (e: MouseEvent<HTMLElement>) => any */
+    scrollDate: (e: MouseEvent<HTMLElement>) => any
 }
 
-const Month: FC<MonthProps> = ({ inputRef, handleChange, daysArr, currentDate, chooseDate, changedDate, time, data, /* scrollDate */ }) => {
+const Month: FC<MonthProps> = ({ inputRef, handleChange, daysArr, currentDate, chooseDate, changedDate, time, data, scrollDate }) => {
     
 
     return (
@@ -35,10 +35,10 @@ const Month: FC<MonthProps> = ({ inputRef, handleChange, daysArr, currentDate, c
             <div className="Month-header">
                 <b>{time.monthName[new Date(currentDate).getMonth()]}</b>
                 <div className="Month-btns">
-                    <button className="btn Month-btn" data-btn={'up'} /* onClick={scrollDate} */>
+                    <button className="btn Month-btn" data-btn={'up'} onClick={scrollDate}>
                         <img src={upBtn} alt="up" />
                     </button>
-                    <button className="btn Month-btn" data-btn={'down'} /* onClick={scrollDate} */>
+                    <button className="btn Month-btn" data-btn={'down'} onClick={scrollDate}>
                         <img src={downBtn} alt="down" />
                     </button>
                 </div>

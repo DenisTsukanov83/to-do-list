@@ -1,3 +1,7 @@
+.Form {
+    width: max-content;
+}
+
 .Form-tasks {
     display: flex;
     flex-direction: column;
@@ -5,8 +9,12 @@
 }
 
 .Form-add {
-    width: 6.6rem;
+    width: 100%;
     height: auto;
     font-size: 0.8rem;
     cursor: pointer;
+}
+
+.Form h3 {
+    width: 100%;
 }

@@ -3,6 +3,7 @@ import './App.css';
 
 import { dataType } from '../types/dataType';
 import { timeType } from "../types/timeType";
+import { hourType } from '../types/hourType';
 
 import Month from '../Month/Month';
 import Tasks from '../Tasks/Tasks';
@@ -164,29 +165,20 @@ const App: FC = () => {
         localStorage.dataToDoList = JSON.stringify(data);
     })
 
-    /* console.log(JSON.parse(localStorage.dataToDoList)) */
-
     function getDataFromLocalStorage() {
-        
-
         if(localStorage.dataToDoList) {
             const newDate = JSON.parse(localStorage.dataToDoList);
-            console.log(1)
             newDate.map((el: dataType) => {
                 const date = el.date;
                 return el.date = new Date(date);
             });
-    
             return newDate;
         } else {
-            console.log(2)
             return [];
         }
     }
 
-    console.log(getDataFromLocalStorage())
-
-
+    let [data, setData] = useState<dataType[]>(getDataFromLocalStorage());
 
     let dataNative: dataType = {
         id: 0,
@@ -211,10 +203,6 @@ const App: FC = () => {
         }
     }
 
-    /* let [data, setData] = useState<dataType[]>([]); */
-    let [data, setData] = useState<dataType[]>(getDataFromLocalStorage());
-    
-
     function getIndex(arr: number[]) {
         for(let i = 0; i <= arr.length; i++) {
             if(arr[i] !== i) {
@@ -236,44 +224,21 @@ const App: FC = () => {
         }
         let status = new Date().getTime() < new Date(changedDate.setHours(h)).getTime() ? 'current' : 'missed';
 
-        
-
         if (index >= 0) {
             newData = data[index];
             const indexArr = newData.hours[changedHour].map(el => el.index).sort((a, b) => a - b);
             const indexNum = getIndex(indexArr);
-            newData.hours[changedHour].push({ index: indexNum ? indexNum: 0, task: '', priority: 1, isDone: false, status: status });
+            newData.hours[changedHour].push({ index: indexNum ? indexNum: 0, task: '', priority: 1, isDone: false, status: status, text: '' });
             newData.date = changedDate;
             newArr = data.filter(el => el.date.getTime() !== changedDate.getTime());
             newArr.push(newData);
         } else {
             const indexArr = newData.hours[changedHour].map(el => el.index);
             const indexNum = getIndex(indexArr);
-            newData.hours[changedHour].push({ index: indexNum ? indexNum: 0, task: '', priority: 1, isDone: false, status: status });
+            newData.hours[changedHour].push({ index: indexNum ? indexNum: 0, task: '', priority: 1, isDone: false, status: status, text: '' });
             newData.date = changedDate;
             newArr = [...data, newData];
         }
-        setData(newArr);
-    }
-
-    function addTask(e: ChangeEvent<HTMLInputElement>, priority: number) {
-        const index = data.findIndex(el => el.date.getTime() === changedDate.getTime());
-        const newData = data[index];
-        newData.hours[changedHour][+(e.target as HTMLInputElement).name].task = (e.target as HTMLInputElement).value;
-        newData.hours[changedHour][+(e.target as HTMLInputElement).name].priority = priority;
-        setData([...data, newData]);
-    }
-
-    function deleteTask(e: MouseEvent<HTMLElement>) {
-        const index = data.findIndex(el => el.date.getTime() === changedDate.getTime());
-        const newData = data[index];
-        const dataIndex: string | undefined = (e.target as HTMLElement).dataset.index
-        if (dataIndex) {
-            newData.hours[changedHour] = newData.hours[changedHour].filter((el, i) => i !== +dataIndex);
-        }
-        let newArr: dataType[] = [];
-        newArr = data.filter(el => el.date.getTime() !== changedDate.getTime());
-        newArr.push(newData);
         setData(newArr);
     }
 
@@ -288,7 +253,8 @@ const App: FC = () => {
                     const newIsDone = newData.hours[changedHour][i].isDone;
                     const newStatus = newData.hours[changedHour][i].status;
                     const newIndex = newData.hours[changedHour][i].index;
-                    return { index: newIndex, task: newTask, priority: +(e.target as HTMLSelectElement).value, isDone: newIsDone, status: newStatus }
+                    const newText = newData.hours[changedHour][i].text;
+                    return { index: newIndex, task: newTask, priority: +(e.target as HTMLSelectElement).value, isDone: newIsDone, status: newStatus, text: newText }
                 } else {
                     return el;
                 }
@@ -347,6 +313,65 @@ const App: FC = () => {
         setData(newArr);
     }
 
+    const [changedTask, setChangedTask] = useState<{date: Date, hour: string, index: number}>({date: changedDate, hour: changedHour, index: 0});
+
+    function addTask(e: ChangeEvent<HTMLInputElement>, priority: number) {
+        const index = data.findIndex(el => el.date.getTime() === changedDate.getTime());
+        const newData = data[index];
+        newData.hours[changedHour][+(e.target as HTMLInputElement).name].task = (e.target as HTMLInputElement).value;
+        newData.hours[changedHour][+(e.target as HTMLInputElement).name].priority = priority;
+        setData([...data, newData]);
+    }
+
+    function deleteTask(e: MouseEvent<HTMLElement>) {
+        const index = data.findIndex(el => el.date.getTime() === changedDate.getTime());
+        const newData = data[index];
+        const dataIndex: string | undefined = (e.target as HTMLElement).dataset.index
+        if (dataIndex) {
+            newData.hours[changedHour] = newData.hours[changedHour].filter((el, i) => i !== +dataIndex);
+        }
+        let newArr: dataType[] = [];
+        newArr = data.filter(el => el.date.getTime() !== changedDate.getTime());
+        newArr.push(newData);
+        setData(newArr);
+        setChangedTask({date: changedDate, hour: changedHour, index: 0});
+    }
+
+    function onChangedTask(e: MouseEvent<HTMLElement>) {
+        const el = (e.target as HTMLElement).closest('.task');
+        let index = (el as HTMLElement).dataset.task;
+        setChangedTask({date: changedDate, hour: changedHour, index: index ? +index : 0});
+        
+    }
+
+    function addText(e: ChangeEvent<HTMLTextAreaElement>) {
+        /* const index = data.findIndex(el => el.date.getTime() === changedTask.date.getTime());
+        const newData = data[index];
+        newData.hours[changedTask.hour][changedTask.index].text = (e.target as HTMLTextAreaElement).value;
+        setData([...data, newData]); */
+        const index = data.findIndex(el => el.date.getTime() === changedTask.date.getTime());
+        let newArr: dataType[] = [];
+        if (index >= 0) {
+            const newData = data[index];
+            newData.hours[changedHour] = newData.hours[changedHour].map((el, i) => {
+                if (i === changedTask.index) {
+                    const newTask = newData.hours[changedHour][i].task;
+                    const newIsDone = newData.hours[changedHour][i].isDone;
+                    const newStatus = newData.hours[changedHour][i].status;
+                    const newIndex = newData.hours[changedHour][i].index;
+                    const newPriority = newData.hours[changedHour][i].priority;
+                    return { index: newIndex, task: newTask, priority: newPriority, isDone: newIsDone, status: newStatus, text: (e.target as HTMLTextAreaElement).value }
+                } else {
+                    return el;
+                }
+            });
+            newData.date = changedDate;
+            newArr = data.filter(el => el.date.getTime() !== changedDate.getTime());
+            newArr.push(newData);
+        }
+        setData(newArr);
+    }
+
 
 
 
@@ -389,7 +414,10 @@ const App: FC = () => {
                 addTask={addTask}
                 deleteTask={deleteTask}
                 onSelect={onSelect} 
-                onCheck={onCheck}/>
+                onCheck={onCheck}
+                onChangedTask={onChangedTask}
+                changedTask={changedTask}
+                addText={addText}/>
         </div>
     );
 }

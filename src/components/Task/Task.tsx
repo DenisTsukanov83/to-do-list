@@ -15,24 +15,22 @@ interface TaskProps {
     addTask: (e: ChangeEvent<HTMLInputElement>, priority: number) => any,
     onSelect: (e: ChangeEvent<HTMLSelectElement>) => any,
     priority: number,
-    onCheck: (e: ChangeEvent<HTMLInputElement>) => any
+    onCheck: (e: ChangeEvent<HTMLInputElement>) => any,
+    onChangedTask: (e: MouseEvent<HTMLElement>) => any,
+    changedTask: {date: Date, hour: string, index: number}
 }
 
-const Task: FC<TaskProps> = ({ data, i, deleteTask, addTask, onSelect, priority, onCheck }) => {
-    const myRef = React.createRef<HTMLInputElement>();
+const Task: FC<TaskProps> = ({ data, i, deleteTask, addTask, onSelect, priority, onCheck, onChangedTask, changedTask }) => {
     const mySelect = React.createRef<HTMLSelectElement>();
     const myCheckbox = React.createRef<HTMLInputElement>();
 
-    useEffect(() => {
-        /* if(myRef.current) {
-            myRef.current.focus();
-        } */
-    });
+    const colorBg = data.index === changedTask.index ? 'changed' : '';
+
 
     return (
-        <div className="task">
+        <div className={`task ${colorBg}`} data-task={data.index} onClick={onChangedTask}>
             <strong>{`${i + 1}.`}</strong>
-            <input className="task-input" ref={myRef} type="text" value={data.task} name={`${i}`} onChange={(e) => addTask(e, mySelect.current ? +mySelect.current.value : 0)} />
+            <input className="task-input" type="text" value={data.task} name={`${i}`} onChange={(e) => addTask(e, mySelect.current ? +mySelect.current.value : 0)} />
             <select ref={mySelect} value={priority} onChange={onSelect} name={`${i}`}>
                 <option value={0}>Важный</option>
                 <option value={1}>Обычный</option>

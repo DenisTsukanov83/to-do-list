@@ -186,23 +186,45 @@ const App: FC = () => {
 
     let [data, setData] = useState<dataType[]>([]);
 
+    function getIndex(arr: number[]) {
+        for(let i = 0; i <= arr.length; i++) {
+            if(arr[i] !== i) {
+                return i;
+            } else {
+                continue;
+            }
+        }
+    }
 
     function addData() {
         const index = data.findIndex(el => el.date.getTime() === changedDate.getTime());
         let newArr: dataType[] = [];
+        let newData = dataNative;
+        const matches = changedHour.match(/\d\d/);
+        let h = 0
+        if(matches) {
+            h = +matches[0];
+        }
+        let status = new Date().getTime() < new Date(changedDate.setHours(h)).getTime() ? 'current' : 'missed';
+
+        
+
         if (index >= 0) {
-            const newData = data[index];
-            newData.hours[changedHour].push({ index: newData.hours[changedHour].length, task: '', priority: 1, isDone: false, status: 'current' });
+            newData = data[index];
+            const indexArr = newData.hours[changedHour].map(el => el.index).sort((a, b) => a - b);
+            const indexNum = getIndex(indexArr);
+            newData.hours[changedHour].push({ index: indexNum ? indexNum: 0, task: '', priority: 1, isDone: false, status: status });
             newData.date = changedDate;
             newArr = data.filter(el => el.date.getTime() !== changedDate.getTime());
             newArr.push(newData);
         } else {
-            const newData = dataNative;
-            newData.hours[changedHour].push({ index: newData.hours[changedHour].length, task: '', priority: 1, isDone: false, status: 'current' });
+            const indexArr = newData.hours[changedHour].map(el => el.index);
+            const indexNum = getIndex(indexArr);
+            newData.hours[changedHour].push({ index: indexNum ? indexNum: 0, task: '', priority: 1, isDone: false, status: status });
             newData.date = changedDate;
             newArr = [...data, newData];
         }
-
+        console.log(newData)
         setData(newArr);
 
 
@@ -238,7 +260,8 @@ const App: FC = () => {
                 if (i === +(e.target as HTMLSelectElement).name) {
                     const newTask = newData.hours[changedHour][i].task;
                     const newIsDone = newData.hours[changedHour][i].isDone;
-                    return { index: newData.hours[changedHour].length, task: newTask, priority: +(e.target as HTMLSelectElement).value, isDone: newIsDone, status: 'current' }
+                    const newStatus = newData.hours[changedHour][i].status;
+                    return { index: newData.hours[changedHour].length, task: newTask, priority: +(e.target as HTMLSelectElement).value, isDone: newIsDone, status: newStatus }
                 } else {
                     return el;
                 }

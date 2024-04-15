@@ -17,7 +17,7 @@ interface DayOfWeekProps {
 const DayOfWeek: FC<DayOfWeekProps> = ({ dayName, tasksArr, cooseDateWeek, date, changedDate }) => {
 
     const newTaskArr = tasksArr.sort((a, b) => {
-        return a.priority - b.priority
+        return a.priority - b.priority;
     })
 
     const arr = ['', '', '', '', '', '', ''];
@@ -31,8 +31,8 @@ const DayOfWeek: FC<DayOfWeekProps> = ({ dayName, tasksArr, cooseDateWeek, date,
                     return (
                         <TaskOfWeek
                             key={i}
-                            i={i}
-                            newTaskArr={newTaskArr}/>
+                            newTaskArr={newTaskArr[i]}
+                            i={i}/>
                     )
                 })}
 

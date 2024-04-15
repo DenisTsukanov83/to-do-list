@@ -5,17 +5,18 @@ import falseImg from '../../sources/check-false.png';
 import currentImg from '../../sources/check-current.png';
 
 interface TaskOfWeekProps {
-    i: number,
     newTaskArr: {
         index: number;
         task: string;
         priority: number;
         isDone: boolean;
         status: string
-    }[]
+    },
+    i: number
 }
 
-const TaskOfWeek: FC<TaskOfWeekProps> = ({i, newTaskArr}) => {
+const TaskOfWeek: FC<TaskOfWeekProps> = ({newTaskArr, i}) => {
+    /* console.log(newTaskArr) */
     function getColor(priority: number) {
         let color = '';
         switch(true) {
@@ -29,16 +30,14 @@ const TaskOfWeek: FC<TaskOfWeekProps> = ({i, newTaskArr}) => {
         return color;
     }
 
-    
-
-    function getImg(i: number) {
+    function getImg() {
         let path = falseImg;
-        if(newTaskArr[i]) {
-            if(newTaskArr[i].status === 'done') {
+        if(newTaskArr) {
+            if(newTaskArr.status === 'done') {
                 path = trueImg;
-            } else if(newTaskArr[i].status === 'missed') {
+            } else if(newTaskArr.status === 'missed') {
                 path = falseImg;
-            } else if(newTaskArr[i].status === 'current') {
+            } else if(newTaskArr.status === 'current') {
                 path = currentImg;
             }
         } else {
@@ -49,9 +48,9 @@ const TaskOfWeek: FC<TaskOfWeekProps> = ({i, newTaskArr}) => {
     return (
         <li key={i}>
             <div className="Week-day-check">
-                <img src={getImg(i)} alt="" />
+                <img src={getImg()} alt="" />
             </div>
-            <div className={`Week-day-data ${getColor(newTaskArr[i] ? newTaskArr[i].priority : 0)}`}>{newTaskArr[i] ? newTaskArr[i].task : ''}</div>
+            <div className={`Week-day-data ${getColor(newTaskArr ? newTaskArr.priority : 0)}`}>{newTaskArr ? newTaskArr.task : ''}</div>
         </li>
     )
 }

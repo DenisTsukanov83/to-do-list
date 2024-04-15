@@ -258,7 +258,8 @@ const App: FC = () => {
                     const newTask = newData.hours[changedHour][i].task;
                     const newIsDone = newData.hours[changedHour][i].isDone;
                     const newStatus = newData.hours[changedHour][i].status;
-                    return { index: newData.hours[changedHour].length, task: newTask, priority: +(e.target as HTMLSelectElement).value, isDone: newIsDone, status: newStatus }
+                    const newIndex = newData.hours[changedHour][i].index;
+                    return { index: newIndex, task: newTask, priority: +(e.target as HTMLSelectElement).value, isDone: newIsDone, status: newStatus }
                 } else {
                     return el;
                 }

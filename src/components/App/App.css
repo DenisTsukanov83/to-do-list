@@ -4,7 +4,15 @@ body, html {
 
 .App {
     display: flex;
-    justify-content: space-around;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+.App-wrapper {
+    width: 98%;
+    display: flex;
+    justify-content: space-between ;
     padding-top: 1rem;
 }
 

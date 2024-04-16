@@ -9,6 +9,7 @@ import Month from '../Month/Month';
 import Tasks from '../Tasks/Tasks';
 import Form from '../Form/Form';
 import Week from '../Week/Week';
+import Clock from '../Clock/Clock';
 
 
 
@@ -388,48 +389,53 @@ const App: FC = () => {
 
     return (
         <div className="App">
-            <Month
-                inputRef={inputRef}
-                handleChange={handleChange}
-                daysArr={getDaysArr()}
-                currentDate={currentDate}
-                chooseDate={chooseDate}
-                changedDate={changedDate}
-                time={time}
-                data={data} 
-                scrollDate={scrollDate}/>
+            <h2 className="App-title">
+                <Clock timeObj={time}/>
+            </h2>
+            <div className="App-wrapper">
+                <Month
+                    inputRef={inputRef}
+                    handleChange={handleChange}
+                    daysArr={getDaysArr()}
+                    currentDate={currentDate}
+                    chooseDate={chooseDate}
+                    changedDate={changedDate}
+                    time={time}
+                    data={data} 
+                    scrollDate={scrollDate}/>
 
-            <Week
-                time={time}
-                getDaysArr={getDaysArr}
-                numberWeek={numberWeek}
-                data={data}
-                dataNative={dataNative}
-                cooseDateWeek={cooseDateWeek}
-                changedDate={changedDate}/>
+                <Week
+                    time={time}
+                    getDaysArr={getDaysArr}
+                    numberWeek={numberWeek}
+                    data={data}
+                    dataNative={dataNative}
+                    cooseDateWeek={cooseDateWeek}
+                    changedDate={changedDate}/>
 
 
-            <Tasks
-                time={time}
-                changedDate={changedDate}
-                chooseHour={chooseHour}
-                changedHour={changedHour}
-                data={data} 
-                onChangedTask={onChangedTask}/>
+                <Tasks
+                    time={time}
+                    changedDate={changedDate}
+                    chooseHour={chooseHour}
+                    changedHour={changedHour}
+                    data={data} 
+                    onChangedTask={onChangedTask}/>
 
-            <Form
-                changedDate={changedDate}
-                changedHour={changedHour}
-                time={time}
-                addData={addData}
-                data={data}
-                addTask={addTask}
-                deleteTask={deleteTask}
-                onSelect={onSelect} 
-                onCheck={onCheck}
-                onChangedTask={onChangedTask}
-                changedTask={changedTask}
-                addText={addText}/>
+                <Form
+                    changedDate={changedDate}
+                    changedHour={changedHour}
+                    time={time}
+                    addData={addData}
+                    data={data}
+                    addTask={addTask}
+                    deleteTask={deleteTask}
+                    onSelect={onSelect} 
+                    onCheck={onCheck}
+                    onChangedTask={onChangedTask}
+                    changedTask={changedTask}
+                    addText={addText}/>
+            </div>
         </div>
     );
 }

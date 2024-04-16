@@ -38,3 +38,7 @@
     border: 0.25rem solid rgb(19, 188, 255);
 }
 
+.today:hover {
+    background: rgb(102, 210, 253);
+}
+

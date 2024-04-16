@@ -5,6 +5,8 @@
     display: grid;
     grid-template-columns: repeat(7, 2.5rem);
     grid-template-rows: repeat(6, 2.5rem);
+    border: 0.06rem solid black;
+    box-sizing: content-box;
 }
 
 .Month-days {

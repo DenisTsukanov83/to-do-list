@@ -5,15 +5,36 @@
     cursor: pointer;
 }
 
+.day-numbers {
+    margin-left: 65%;
+}
+
+.red-round {
+    width: 0.7rem;
+    height: 0.7rem;
+    border-radius: 50%;
+    background-color: red;
+    font-size: 0.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+}
+
 .day:hover {
     background-color: #e9e9e9;
 }
 
 .last, .next {
-    background-color: #d1d1d1;
+    background-color: #d3d3d3;
 }
 
 .today {
-    background-color: blue;
+    background-color: rgb(19, 188, 255);
     color: white;
 }
+
+.changed-border {
+    border: 0.25rem solid rgb(19, 188, 255);
+}
+

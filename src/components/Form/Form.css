@@ -1,8 +1,8 @@
 .Form {
     width: 23rem;
-    display: flex;
+    /* display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: space-between; */
 }
 
 .Form-tasks {

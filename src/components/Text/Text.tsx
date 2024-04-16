@@ -14,16 +14,12 @@ interface TextProps {
 
 const Text: FC<TextProps> = ({changedTask, data, time, addText, changedDate, changedHour}) => {
     const index = data.findIndex(el => el.date.getTime() === changedDate.getTime());
-    /* console.log(data) */
-    let dataIndex = 0;
     let text = ''
     let title = '';
     if(index >= 0) {
-        dataIndex = data[index].hours[changedHour].findIndex(el => el.index === changedTask.index)
-        
-        if(data[index].hours[changedHour][dataIndex] && data[index].hours[changedHour][changedTask.index]) {
-            text = data[index].hours[changedHour][dataIndex].text;
-            title = data[index].hours[changedHour][changedTask.index].task;
+        if(data[index].hours[changedHour].findIndex(el => el.index === changedTask.index) >= 0) {
+            text = data[index].hours[changedHour][data[index].hours[changedHour].findIndex(el => el.index === changedTask.index)].text
+            title = data[index].hours[changedHour][data[index].hours[changedHour].findIndex(el => el.index === changedTask.index)].task;
         } else {
             text = '';
             title = '';

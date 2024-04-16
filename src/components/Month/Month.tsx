@@ -87,7 +87,7 @@ const Month: FC<MonthProps> = ({ inputRef, handleChange, daysArr, currentDate, c
                     <div>
                         <img src={falseImg} alt="" />
                     </div>
-                    <div>Невыполнено</div>
+                    <div>Не выполнено</div>
                 </div>
                 <div className="info-item">
                     <div>

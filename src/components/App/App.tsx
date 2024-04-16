@@ -357,19 +357,22 @@ const App: FC = () => {
     }
 
     function addText(e: ChangeEvent<HTMLTextAreaElement>) {
+        
         const index = data.findIndex(el => el.date.getTime() === changedTask.date.getTime());
         let newArr: dataType[] = [];
         if (index >= 0) {
             const newData = data[index];
             newData.hours[changedHour] = newData.hours[changedHour].map((el, i) => {
-                if (i === changedTask.index) {
+                if (el.index === changedTask.index) {
+                    console.log('if 1');
                     const newTask = newData.hours[changedHour][i].task;
                     const newIsDone = newData.hours[changedHour][i].isDone;
                     const newStatus = newData.hours[changedHour][i].status;
                     const newIndex = newData.hours[changedHour][i].index;
                     const newPriority = newData.hours[changedHour][i].priority;
-                    return { index: newIndex, task: newTask, priority: newPriority, isDone: newIsDone, status: newStatus, text: (e.target as HTMLTextAreaElement).value }
+                    return { index: newIndex, task: newTask, priority: newPriority, isDone: newIsDone, status: newStatus, text: (e.target as HTMLTextAreaElement).value };
                 } else {
+                    console.log('if 2');
                     return el;
                 }
             });

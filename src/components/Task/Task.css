@@ -12,6 +12,7 @@
 
 .task-input {
     font-size: 0.8rem;
+    cursor: pointer;
 }
 
 .task-trash {
@@ -28,4 +29,9 @@
 
 .task-check {
     width: 1rem;
+    cursor: pointer;
+}
+
+select {
+    cursor: pointer;
 }

@@ -29,7 +29,7 @@ const Task: FC<TaskProps> = ({ data, i, deleteTask, addTask, onSelect, priority,
     return (
         <div className={`task ${colorBg}`} data-task={data.index} onClick={onChangedTask}>
             <strong>{`${i + 1}.`}</strong>
-            <input className="task-input" type="text" value={data.task} name={`${i}`} onChange={(e) => addTask(e, mySelect.current ? +mySelect.current.value : 0)} placeholder="Введите название задачи"/>
+            <input className="task-input" type="text" value={data.task} name={`${i}`} onChange={(e) => addTask(e, mySelect.current ? +mySelect.current.value : 0)} placeholder="Введите название задачи" autoComplete="off"/>
             <select ref={mySelect} value={priority} onChange={onSelect} name={`${i}`}>
                 <option value={0}>Важный</option>
                 <option value={1}>Обычный</option>

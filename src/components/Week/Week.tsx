@@ -23,10 +23,11 @@ interface WeekProps {
     changedDate: Date,
     onChangedTask: (e: MouseEvent<HTMLElement>) => any,
     changedHour: string,
-    changedTask: {date: Date, hour: string, index: number}
+    changedTask: {date: Date, hour: string, index: number},
+    chooseHour:(e: MouseEvent<HTMLElement>) => any
 }
 
-const Week: FC<WeekProps>  = ({time, getDaysArr, numberWeek, data, dataNative, cooseDateWeek, changedDate, onChangedTask, changedHour, changedTask}) => {
+const Week: FC<WeekProps>  = ({time, getDaysArr, numberWeek, data, dataNative, cooseDateWeek, changedDate, onChangedTask, changedHour, changedTask, chooseHour}) => {
     const newDaysArr = getDaysArr().filter(el => el.numberWeek === numberWeek);
     return (
         <div className="week">
@@ -45,8 +46,11 @@ const Week: FC<WeekProps>  = ({time, getDaysArr, numberWeek, data, dataNative, c
                                 }
                             }
                         });
+
                         let tasksArr: { index: number, task: string, priority: number, isDone: boolean, status: string}[][] = [];
+                        let clock = '';
                         for(let key in newData.hours) {
+                            clock = key;
                             tasksArr.push(newData.hours[key])
                         }
                         return <DayOfWeek 
@@ -58,8 +62,9 @@ const Week: FC<WeekProps>  = ({time, getDaysArr, numberWeek, data, dataNative, c
                                     changedDate={changedDate}
                                     onChangedTask={onChangedTask}
                                     changedHour={changedHour}
-                                    data={data}
-                                    changedTask={changedTask}/>
+                                    changedTask={changedTask}
+                                    clock={clock}
+                                    chooseHour={chooseHour}/>
                         
                     })
                 }

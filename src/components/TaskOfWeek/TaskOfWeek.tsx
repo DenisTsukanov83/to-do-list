@@ -19,10 +19,12 @@ interface TaskOfWeekProps {
     i: number,
     onChangedTask: (e: MouseEvent<HTMLElement>) => any,
     changedTask: {date: Date, hour: string, index: number},
-    cangeClass: string
+    cangeClass: string,
+    clock: string,
+    chooseHour: (e: MouseEvent<HTMLElement>) => any
 }
 
-const TaskOfWeek: FC<TaskOfWeekProps> = ({newTaskArr, i, onChangedTask, changedTask, cangeClass}) => {
+const TaskOfWeek: FC<TaskOfWeekProps> = ({newTaskArr, i, onChangedTask, changedTask, cangeClass, clock, chooseHour}) => {
     function getColor(priority: number) {
         let color = '';
         switch(true) {
@@ -57,7 +59,7 @@ const TaskOfWeek: FC<TaskOfWeekProps> = ({newTaskArr, i, onChangedTask, changedT
     }
     
     return (
-        <li key={i} className={`week-task ${colorBg}`} onClick={onChangedTask} data-task={newTaskArr ? newTaskArr.index : 0}>
+        <li key={i} className={`week-task ${colorBg}`} onClick={onChangedTask} data-task={newTaskArr ? newTaskArr.index : 0} data-time={clock}>
             <div className="week-day-check">
                 <img src={getImg()} alt="" />
             </div>

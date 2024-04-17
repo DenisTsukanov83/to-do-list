@@ -13,12 +13,13 @@ interface DayOfWeekProps {
     date: Date,
     changedDate: Date,
     onChangedTask: (e: MouseEvent<HTMLElement>) => any,
-    changedHour: string
-    data: dataType[],
-    changedTask: {date: Date, hour: string, index: number}
+    changedHour: string,
+    changedTask: {date: Date, hour: string, index: number},
+    clock: string,
+    chooseHour: (e: MouseEvent<HTMLElement>) => any
 }
 
-const DayOfWeek: FC<DayOfWeekProps> = ({ dayName, tasksArr, cooseDateWeek, date, changedDate, onChangedTask, data, changedTask }) => {
+const DayOfWeek: FC<DayOfWeekProps> = ({ dayName, tasksArr, cooseDateWeek, date, changedDate, onChangedTask, changedTask, clock, chooseHour }) => {
 
     const newTaskArr = tasksArr.sort((a, b) => {
         return a.priority - b.priority;
@@ -30,6 +31,7 @@ const DayOfWeek: FC<DayOfWeekProps> = ({ dayName, tasksArr, cooseDateWeek, date,
             <b className="week-day-title">{`${dayName}`}</b>
             <ul className="week-day-list">
                 {arr.map((el, i) => {
+                    
                     return (
                         <TaskOfWeek
                             key={i}
@@ -37,7 +39,9 @@ const DayOfWeek: FC<DayOfWeekProps> = ({ dayName, tasksArr, cooseDateWeek, date,
                             i={i}
                             onChangedTask={onChangedTask}
                             changedTask={changedTask}
-                            cangeClass={cangeClass}/>
+                            cangeClass={cangeClass}
+                            clock={clock}
+                            chooseHour={chooseHour}/>
                     )
                 })}
 

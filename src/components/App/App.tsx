@@ -78,7 +78,7 @@ const App: FC = () => {
     }
 
     function getNameDay(index: number) {
-        switch(true) {
+        switch (true) {
             case index === 0: return time.dayName[6];
             case index === 1: return time.dayName[0];
             case index === 2: return time.dayName[1];
@@ -145,10 +145,20 @@ const App: FC = () => {
     const [changedHour, setChangedHour] = useState('07:00');
 
     function chooseHour(e: MouseEvent<HTMLElement>) {
-        const el = (e.target as HTMLElement).closest('.Hour');
-        if (el) {
-            setChangedHour(el ? `${(el as HTMLElement).dataset.time}` : '');
+        if ((e.target as HTMLElement).closest('.Hour')) {
+            const el = (e.target as HTMLElement).closest('.Hour');
+            if (el) {
+                console.log((el as HTMLElement).dataset.time)
+                setChangedHour(el ? `${(el as HTMLElement).dataset.time}` : '');
+            }
+        } else if((e.target as HTMLElement).closest('.week-task')) {
+            const el = (e.target as HTMLElement).closest('.week-task');
+            if (el) {
+                console.log((el as HTMLElement).dataset.time)
+                setChangedHour(el ? `${(el as HTMLElement).dataset.time}` : '');
+            }
         }
+
     }
 
     useEffect(() => {
@@ -156,7 +166,7 @@ const App: FC = () => {
     })
 
     function getDataFromLocalStorage() {
-        if(localStorage.dataToDoList) {
+        if (localStorage.dataToDoList) {
             const newDate = JSON.parse(localStorage.dataToDoList);
             newDate.map((el: dataType) => {
                 const date = el.date;
@@ -194,8 +204,8 @@ const App: FC = () => {
     }
 
     function getIndex(arr: number[]) {
-        for(let i = 0; i <= arr.length; i++) {
-            if(arr[i] !== i) {
+        for (let i = 0; i <= arr.length; i++) {
+            if (arr[i] !== i) {
                 return i;
             } else {
                 continue;
@@ -209,7 +219,7 @@ const App: FC = () => {
         let newData = dataNative;
         const matches = changedHour.match(/\d\d/);
         let h = 0
-        if(matches) {
+        if (matches) {
             h = +matches[0];
         }
         let status = new Date().getTime() < new Date(changedDate.setHours(h)).getTime() ? 'current' : 'missed';
@@ -218,14 +228,14 @@ const App: FC = () => {
             newData = data[index];
             const indexArr = newData.hours[changedHour].map(el => el.index).sort((a, b) => a - b);
             const indexNum = getIndex(indexArr);
-            newData.hours[changedHour].push({ index: indexNum ? indexNum: 0, task: '', priority: 1, isDone: false, status: status, text: '' });
+            newData.hours[changedHour].push({ index: indexNum ? indexNum : 0, task: '', priority: 1, isDone: false, status: status, text: '' });
             newData.date = changedDate;
             newArr = data.filter(el => el.date.getTime() !== changedDate.getTime());
             newArr.push(newData);
         } else {
             const indexArr = newData.hours[changedHour].map(el => el.index);
             const indexNum = getIndex(indexArr);
-            newData.hours[changedHour].push({ index: indexNum ? indexNum: 0, task: '', priority: 1, isDone: false, status: status, text: '' });
+            newData.hours[changedHour].push({ index: indexNum ? indexNum : 0, task: '', priority: 1, isDone: false, status: status, text: '' });
             newData.date = changedDate;
             newArr = [...data, newData];
         }
@@ -263,19 +273,19 @@ const App: FC = () => {
         let date = changedDate.getDate();
         let newDate = changedDate;
         function iteration(year: number, month: number) {
-            let obj : {year: number, month: number} = {year: 0, month: 0};
-            if(month === 0) {
-                obj = {year: year - 1, month: 12};
-            } else if(month === 13) {
-                obj = {year: year + 1, month: 1};
+            let obj: { year: number, month: number } = { year: 0, month: 0 };
+            if (month === 0) {
+                obj = { year: year - 1, month: 12 };
+            } else if (month === 13) {
+                obj = { year: year + 1, month: 1 };
             } else {
-                obj = {year: year, month: month};
+                obj = { year: year, month: month };
             }
             return obj;
         }
-        if((btn as HTMLElement).dataset.btn === 'up') {
+        if ((btn as HTMLElement).dataset.btn === 'up') {
             newDate = new Date(iteration(year, month + 1).year, iteration(year, month + 1).month, date);
-        }  else {
+        } else {
             newDate = new Date(iteration(year, month - 1).year, iteration(year, month - 1).month, date);
         }
 
@@ -297,7 +307,7 @@ const App: FC = () => {
                     const newText = newData.hours[changedHour][i].text;
                     const newPriority = newData.hours[changedHour][i].priority
                     return { index: newIndex, task: newTask, priority: newPriority, isDone: (e.target as HTMLInputElement).checked, status: newStatus, text: newText }
-                    
+
                 } else {
                     return el;
                 }
@@ -309,7 +319,7 @@ const App: FC = () => {
         setData(newArr);
     }
 
-    const [changedTask, setChangedTask] = useState<{date: Date, hour: string, index: number}>({date: changedDate, hour: changedHour, index: 0});
+    const [changedTask, setChangedTask] = useState<{ date: Date, hour: string, index: number }>({ date: changedDate, hour: changedHour, index: 0 });
 
     function addTask(e: ChangeEvent<HTMLInputElement>, priority: number) {
         const index = data.findIndex(el => el.date.getTime() === changedDate.getTime());
@@ -330,24 +340,24 @@ const App: FC = () => {
         newArr = data.filter(el => el.date.getTime() !== changedDate.getTime());
         newArr.push(newData);
         setData(newArr);
-        setChangedTask({date: changedDate, hour: changedHour, index: 0});
+        setChangedTask({ date: changedDate, hour: changedHour, index: 0 });
     }
 
     function onChangedTask(e: MouseEvent<HTMLElement>) {
-        if((e.target as HTMLElement).closest('.task')) {
+        if ((e.target as HTMLElement).closest('.task')) {
             const el = (e.target as HTMLElement).closest('.task');
             let indexTask = (el as HTMLElement).dataset.task;
-            setChangedTask({date: changedDate, hour: changedHour, index: indexTask ? +indexTask : 0});
+            setChangedTask({ date: changedDate, hour: changedHour, index: indexTask ? +indexTask : 0 });
         }
-        if((e.target as HTMLElement).closest('.Hour-task')) {
+        if ((e.target as HTMLElement).closest('.Hour-task')) {
             const el = (e.target as HTMLElement).closest('.Hour-task');
             let indexTask = (el as HTMLElement).dataset.task;
-            setChangedTask({date: changedDate, hour: changedHour, index: indexTask ? +indexTask : 0});
+            setChangedTask({ date: changedDate, hour: changedHour, index: indexTask ? +indexTask : 0 });
         }
-        if((e.target as HTMLElement).closest('.week-task')) {
+        if ((e.target as HTMLElement).closest('.week-task')) {
             const el = (e.target as HTMLElement).closest('.week-task');
             let indexTask = (el as HTMLElement).dataset.task;
-            setChangedTask({date: changedDate, hour: changedHour, index: indexTask ? +indexTask : 0});
+            setChangedTask({ date: changedDate, hour: changedHour, index: indexTask ? +indexTask : 0 });
         }
     }
 
@@ -381,7 +391,7 @@ const App: FC = () => {
     return (
         <div className="App">
             <h2 className="App-title">
-                <Clock timeObj={time}/>
+                <Clock timeObj={time} />
             </h2>
             <div className="App-wrapper">
                 <Month
@@ -392,8 +402,8 @@ const App: FC = () => {
                     chooseDate={chooseDate}
                     changedDate={changedDate}
                     time={time}
-                    data={data} 
-                    scrollDate={scrollDate}/>
+                    data={data}
+                    scrollDate={scrollDate} />
 
                 <Week
                     time={time}
@@ -405,7 +415,8 @@ const App: FC = () => {
                     changedDate={changedDate}
                     changedHour={changedHour}
                     onChangedTask={onChangedTask}
-                    changedTask={changedTask}/>
+                    changedTask={changedTask} 
+                    chooseHour={chooseHour}/>
 
 
                 <Tasks
@@ -413,9 +424,9 @@ const App: FC = () => {
                     changedDate={changedDate}
                     chooseHour={chooseHour}
                     changedHour={changedHour}
-                    data={data} 
+                    data={data}
                     onChangedTask={onChangedTask}
-                    changedTask={changedTask}/>
+                    changedTask={changedTask} />
 
                 <Form
                     changedDate={changedDate}
@@ -425,11 +436,11 @@ const App: FC = () => {
                     data={data}
                     addTask={addTask}
                     deleteTask={deleteTask}
-                    onSelect={onSelect} 
+                    onSelect={onSelect}
                     onCheck={onCheck}
                     onChangedTask={onChangedTask}
                     changedTask={changedTask}
-                    addText={addText}/>
+                    addText={addText} />
             </div>
         </div>
     );

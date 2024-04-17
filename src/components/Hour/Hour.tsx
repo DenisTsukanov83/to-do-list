@@ -30,7 +30,7 @@ const Hour: FC<HourProps> = ({clock, changedHour, data, priority, onChangedTask,
     let colorBg1 = '';
     let colorBg2 = '';
     let colorBg3 = '';
-    if(changedHour === clock && data[0] && data[1] && data[2]) {
+    /* if(changedHour === clock) {
         switch(true) {
             case data[0].index === changedTask.index: colorBg1 = 'dark-changed';
             break;
@@ -39,17 +39,32 @@ const Hour: FC<HourProps> = ({clock, changedHour, data, priority, onChangedTask,
             case data[2].index === changedTask.index: colorBg3 = 'dark-changed';
             break;
         }
+    } */
+    if(changedHour === clock) {
+        if(data[0]) {
+            if(data[0].index === changedTask.index) colorBg1 = 'dark-changed';
+        }
+        if(data[1]) {
+            if(data[1].index === changedTask.index) colorBg2 = 'dark-changed';
+        }
+        if(data[2]) {
+            if(data[2].index === changedTask.index) colorBg3 = 'dark-changed';
+        }
     }
 
+    const classRedRound = data.length ? 'red-round' : '';
+
+
     return (
-        <div className={`Hour ${changedHour === clock ? 'changed' : ''}`} data-time={clock}>
-            <div className="Hour-time">
-                {clock}
-            </div>
-            <div className='Hour-content'>
-                <div className={`Hour-task ${colorBg1} ${getColor(data[0] ? data[0].priority : 0)}`} data-task={data[0] ? data[0].index : ''} onClick={onChangedTask}>{data[0] ? data[0].task : ''}</div>
-                <div className={`Hour-task ${colorBg2} ${getColor(data[1] ? data[1].priority : 0)}`} data-task={data[1] ? data[1].index : ''} onClick={onChangedTask}>{data[1] ? data[1].task : ''}</div>
-                <div className={`Hour-task ${colorBg3} ${getColor(data[2] ? data[2].priority : 0)}`} data-task={data[2] ? data[2].index : ''} onClick={onChangedTask}>{data[2] ? data[2].task : ''}</div>
+        <div className={`hour ${changedHour === clock ? 'changed' : ''}`} data-time={clock}>
+            <b className="hour-time">
+                <div>{clock}</div>
+                <div className={classRedRound}>{data.length ? data.length : ''}</div>
+            </b>
+            <div className='hour-content'>
+                <div className={`hour-task ${colorBg1} ${getColor(data[0] ? data[0].priority : 0)}`} data-task={data[0] ? data[0].index : ''} onClick={onChangedTask}>{data[0] ? data[0].task : ''}</div>
+                <div className={`hour-task ${colorBg2} ${getColor(data[1] ? data[1].priority : 0)}`} data-task={data[1] ? data[1].index : ''} onClick={onChangedTask}>{data[1] ? data[1].task : ''}</div>
+                <div className={`hour-task ${colorBg3} ${getColor(data[2] ? data[2].priority : 0)}`} data-task={data[2] ? data[2].index : ''} onClick={onChangedTask}>{data[2] ? data[2].task : ''}</div>
             </div>
         </div>
     )

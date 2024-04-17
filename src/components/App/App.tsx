@@ -145,8 +145,8 @@ const App: FC = () => {
     const [changedHour, setChangedHour] = useState('07:00');
 
     function chooseHour(e: MouseEvent<HTMLElement>) {
-        if ((e.target as HTMLElement).closest('.Hour')) {
-            const el = (e.target as HTMLElement).closest('.Hour');
+        if ((e.target as HTMLElement).closest('.hour')) {
+            const el = (e.target as HTMLElement).closest('.hour');
             if (el) {
                 console.log((el as HTMLElement).dataset.time)
                 setChangedHour(el ? `${(el as HTMLElement).dataset.time}` : '');
@@ -357,8 +357,8 @@ const App: FC = () => {
             let indexTask = (el as HTMLElement).dataset.task;
             setChangedTask({ date: changedDate, hour: changedHour, index: indexTask ? +indexTask : 0 });
         }
-        if ((e.target as HTMLElement).closest('.Hour-task')) {
-            const el = (e.target as HTMLElement).closest('.Hour-task');
+        if ((e.target as HTMLElement).closest('.hour-task')) {
+            const el = (e.target as HTMLElement).closest('.hour-task');
             let indexTask = (el as HTMLElement).dataset.task;
             setChangedTask({ date: changedDate, hour: changedHour, index: indexTask ? +indexTask : 0 });
         }

@@ -1,5 +1,7 @@
 import React, {FC, ChangeEvent} from "react";
 
+import './Text.css';
+
 import { dataType } from "../types/dataType";
 import { timeType } from "../types/timeType";
 
@@ -29,7 +31,7 @@ const Text: FC<TextProps> = ({changedTask, data, time, addText, changedDate, cha
         <div className="text">
             <h3>{`Задача: ${changedTask.date.getDate()} ${time.monthName2[changedTask.date.getMonth()]} ${changedTask.date.getFullYear()} / ${changedTask.hour}`}</h3>
             <h4>{title}</h4>
-            <textarea name="" id="" cols={45} rows={10} onChange={addText} value={text ? text : ''}  placeholder="Введите описание задачи"></textarea>
+            <textarea cols={35} rows={12} onChange={addText} value={text ? text : ''}  placeholder="Введите описание задачи"></textarea>
         </div>
     )
 }

@@ -3,7 +3,6 @@ import './App.css';
 
 import { dataType } from '../types/dataType';
 import { timeType } from "../types/timeType";
-import { hourType } from '../types/hourType';
 
 import Month from '../Month/Month';
 import Tasks from '../Tasks/Tasks';
@@ -151,16 +150,6 @@ const App: FC = () => {
             setChangedHour(el ? `${(el as HTMLElement).dataset.time}` : '');
         }
     }
-
-
-    // https://stackoverflow.com/questions/54738221/typescript-array-find-possibly-undefined
-    // function ensure<T>(argument: T | undefined | null, message: string = 'This value was promised to be there.'): T {
-    //     if (argument === undefined || argument === null) {
-    //         throw new TypeError(message);
-    //     }
-
-    //     return argument;
-    // }
 
     useEffect(() => {
         localStorage.dataToDoList = JSON.stringify(data);
@@ -355,17 +344,20 @@ const App: FC = () => {
             let indexTask = (el as HTMLElement).dataset.task;
             setChangedTask({date: changedDate, hour: changedHour, index: indexTask ? +indexTask : 0});
         }
+        if((e.target as HTMLElement).closest('.week-task')) {
+            const el = (e.target as HTMLElement).closest('.week-task');
+            let indexTask = (el as HTMLElement).dataset.task;
+            setChangedTask({date: changedDate, hour: changedHour, index: indexTask ? +indexTask : 0});
+        }
     }
 
     function addText(e: ChangeEvent<HTMLTextAreaElement>) {
-        
         const index = data.findIndex(el => el.date.getTime() === changedTask.date.getTime());
         let newArr: dataType[] = [];
         if (index >= 0) {
             const newData = data[index];
             newData.hours[changedHour] = newData.hours[changedHour].map((el, i) => {
                 if (el.index === changedTask.index) {
-                    console.log('if 1');
                     const newTask = newData.hours[changedHour][i].task;
                     const newIsDone = newData.hours[changedHour][i].isDone;
                     const newStatus = newData.hours[changedHour][i].status;
@@ -373,7 +365,6 @@ const App: FC = () => {
                     const newPriority = newData.hours[changedHour][i].priority;
                     return { index: newIndex, task: newTask, priority: newPriority, isDone: newIsDone, status: newStatus, text: (e.target as HTMLTextAreaElement).value };
                 } else {
-                    console.log('if 2');
                     return el;
                 }
             });
@@ -411,7 +402,10 @@ const App: FC = () => {
                     data={data}
                     dataNative={dataNative}
                     cooseDateWeek={cooseDateWeek}
-                    changedDate={changedDate}/>
+                    changedDate={changedDate}
+                    changedHour={changedHour}
+                    onChangedTask={onChangedTask}
+                    changedTask={changedTask}/>
 
 
                 <Tasks
@@ -420,7 +414,8 @@ const App: FC = () => {
                     chooseHour={chooseHour}
                     changedHour={changedHour}
                     data={data} 
-                    onChangedTask={onChangedTask}/>
+                    onChangedTask={onChangedTask}
+                    changedTask={changedTask}/>
 
                 <Form
                     changedDate={changedDate}

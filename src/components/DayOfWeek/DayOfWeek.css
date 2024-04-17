@@ -1,36 +1,35 @@
-.Week-day {
+.week-day {
     width: 9rem;
     cursor: pointer;
     overflow: hidden;
 }
 
-.Week-day:hover {
+.week-day:hover {
     background-color: #e9e9e9;
 }
 
-.Week-day-list {
+.week-day-list {
     font-size: 0.7rem;
     
 }
 
-.Week-day-list li {
+.week-day-list li {
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    margin-top: 0.1rem;
 }
 
-.Week-day-check {
+.week-day-check {
     width: 0.9rem;
     height: 0.9rem;
 }
 
-.Week-day-check img {
+.week-day-check img {
     width: 100%;
     height: 100%;
 }
 
-.Week-day-data {
+.week-day-data {
     width: 100%;
     height: 1.1rem;
     border-bottom: 0.06rem solid black;

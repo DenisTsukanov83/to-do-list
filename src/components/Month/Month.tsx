@@ -30,6 +30,9 @@ const Month: FC<MonthProps> = ({ inputRef, handleChange, daysArr, currentDate, c
 
     return (
         <div className="Month">
+            <div className="Month-today">
+                
+            </div>
             <div className="Month-title">
                 <h3>План на месяц</h3>
                 <input type="date" ref={inputRef} onChange={handleChange} value={currentDate} />

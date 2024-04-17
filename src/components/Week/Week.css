@@ -1,8 +1,8 @@
-.Week {
+.week {
     width: 20rem;
 }
 
-.Week-calendar {
+.week-calendar {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;

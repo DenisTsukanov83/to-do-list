@@ -1,8 +1,8 @@
-import React, {FC} from "react";
+import React, {FC, MouseEvent} from "react";
 
 import './DayOfWeek.css';
 
-
+import { dataType } from "../types/dataType";
 
 import TaskOfWeek from "../TaskOfWeek/TaskOfWeek";
 
@@ -11,28 +11,33 @@ interface DayOfWeekProps {
     tasksArr: { index: number; task: string; priority: number, isDone: boolean, status: string}[],
     cooseDateWeek: (date: Date) => any,
     date: Date,
-    changedDate: Date
+    changedDate: Date,
+    onChangedTask: (e: MouseEvent<HTMLElement>) => any,
+    changedHour: string
+    data: dataType[],
+    changedTask: {date: Date, hour: string, index: number}
 }
 
-const DayOfWeek: FC<DayOfWeekProps> = ({ dayName, tasksArr, cooseDateWeek, date, changedDate }) => {
+const DayOfWeek: FC<DayOfWeekProps> = ({ dayName, tasksArr, cooseDateWeek, date, changedDate, onChangedTask, data, changedTask }) => {
 
     const newTaskArr = tasksArr.sort((a, b) => {
         return a.priority - b.priority;
     })
-
     const arr = ['', '', '', '', '', '', ''];
     const cangeClass = date.getTime() === new Date(changedDate.setHours(0, 0, 0, 0)).getTime() ? 'changed' : '';
     return (
-        <div className={`Week-day ${cangeClass}`} onClick={() => cooseDateWeek(date)}>
-            <b className="Week-day-title">{`${dayName}`}</b>
-            <ul className="Week-day-list">
+        <div className={`week-day ${cangeClass}`} onClick={() => cooseDateWeek(date)}>
+            <b className="week-day-title">{`${dayName}`}</b>
+            <ul className="week-day-list">
                 {arr.map((el, i) => {
-                    
                     return (
                         <TaskOfWeek
                             key={i}
                             newTaskArr={newTaskArr[i]}
-                            i={i}/>
+                            i={i}
+                            onChangedTask={onChangedTask}
+                            changedTask={changedTask}
+                            cangeClass={cangeClass}/>
                     )
                 })}
 

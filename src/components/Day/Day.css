@@ -36,6 +36,8 @@
 
 .changed-border {
     border: 0.25rem solid rgb(19, 188, 255);
+    background-color: white;
+    color: black;
 }
 
 .today:hover {

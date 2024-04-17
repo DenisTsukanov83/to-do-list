@@ -2,8 +2,6 @@ import React, {FC, MouseEvent} from "react";
 
 import './DayOfWeek.css';
 
-import { dataType } from "../types/dataType";
-
 import TaskOfWeek from "../TaskOfWeek/TaskOfWeek";
 
 interface DayOfWeekProps {

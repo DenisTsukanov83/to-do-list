@@ -4,7 +4,6 @@ import './Week.css';
 
 import { timeType } from "../types/timeType";
 import { dataType } from "../types/dataType";
-import { dayType } from "../types/dayType";
 
 import DayOfWeek from "../DayOfWeek/DayOfWeek";
 

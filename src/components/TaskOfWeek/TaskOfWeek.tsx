@@ -2,8 +2,6 @@ import React, { FC, MouseEvent } from "react";
 
 import './TaskOfWeek.css';
 
-import { dataType } from "../types/dataType";
-
 import trueImg from '../../sources/check-true.png';
 import falseImg from '../../sources/check-false.png';
 import currentImg from '../../sources/check-current.png';

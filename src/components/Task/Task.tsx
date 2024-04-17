@@ -1,4 +1,4 @@
-import React, { FC, MouseEvent, useEffect, ChangeEvent, } from "react";
+import React, { FC, MouseEvent, ChangeEvent} from "react";
 import './Task.css';
 import trash from '../../sources/trash.png';
 
@@ -9,6 +9,7 @@ interface TaskProps {
         priority: number;
         isDone: boolean;
         status: string;
+        hour: string
     },
     i: number,
     deleteTask: (e: MouseEvent<HTMLElement>) => any,
@@ -23,7 +24,6 @@ interface TaskProps {
 const Task: FC<TaskProps> = ({ data, i, deleteTask, addTask, onSelect, priority, onCheck, onChangedTask, changedTask }) => {
     const mySelect = React.createRef<HTMLSelectElement>();
     const myCheckbox = React.createRef<HTMLInputElement>();
-
     const colorBg = data.index === changedTask.index ? 'changed' : '';
 
     return (

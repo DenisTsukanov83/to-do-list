@@ -8,18 +8,17 @@ import TaskOfWeek from "../TaskOfWeek/TaskOfWeek";
 
 interface DayOfWeekProps {
     dayName: string
-    tasksArr: { index: number; task: string; priority: number, isDone: boolean, status: string}[],
+    tasksArr: { index: number; task: string; priority: number, isDone: boolean, status: string, hour: string}[],
     cooseDateWeek: (date: Date) => any,
     date: Date,
     changedDate: Date,
     onChangedTask: (e: MouseEvent<HTMLElement>) => any,
     changedHour: string,
-    changedTask: {date: Date, hour: string, index: number},
-    clock: string,
+    changedTask: {date: Date, hour: string, index: number}
     chooseHour: (e: MouseEvent<HTMLElement>) => any
 }
 
-const DayOfWeek: FC<DayOfWeekProps> = ({ dayName, tasksArr, cooseDateWeek, date, changedDate, onChangedTask, changedTask, clock, chooseHour }) => {
+const DayOfWeek: FC<DayOfWeekProps> = ({ dayName, tasksArr, cooseDateWeek, date, changedDate, onChangedTask, changedHour, changedTask, chooseHour }) => {
 
     const newTaskArr = tasksArr.sort((a, b) => {
         return a.priority - b.priority;
@@ -39,9 +38,9 @@ const DayOfWeek: FC<DayOfWeekProps> = ({ dayName, tasksArr, cooseDateWeek, date,
                             i={i}
                             onChangedTask={onChangedTask}
                             changedTask={changedTask}
-                            cangeClass={cangeClass}
-                            clock={clock}
-                            chooseHour={chooseHour}/>
+                            gangeClass={cangeClass}
+                            chooseHour={chooseHour}
+                            changedHour={changedHour}/>
                     )
                 })}
 

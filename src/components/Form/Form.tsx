@@ -27,8 +27,6 @@ const Form: FC<FormProps> = ({ changedDate, changedHour, time, addData, data, ad
     const index = data.findIndex(el => el.date.getTime() === changedDate.getTime());
     const inputsArr = index >= 0 ? data[index].hours[changedHour] : [];
 
-    
-
     return (
         <div className="Form">
             <div className="Form-add">

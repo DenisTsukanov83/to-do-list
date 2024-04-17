@@ -10,6 +10,7 @@ import currentImg from '../../sources/check-current.png';
 
 interface TaskOfWeekProps {
     newTaskArr: {
+        hour: string;
         index: number;
         task: string;
         priority: number;
@@ -19,12 +20,12 @@ interface TaskOfWeekProps {
     i: number,
     onChangedTask: (e: MouseEvent<HTMLElement>) => any,
     changedTask: {date: Date, hour: string, index: number},
-    cangeClass: string,
-    clock: string,
-    chooseHour: (e: MouseEvent<HTMLElement>) => any
+    gangeClass: string,
+    chooseHour: (e: MouseEvent<HTMLElement>) => any,
+    changedHour: string
 }
 
-const TaskOfWeek: FC<TaskOfWeekProps> = ({newTaskArr, i, onChangedTask, changedTask, cangeClass, clock, chooseHour}) => {
+const TaskOfWeek: FC<TaskOfWeekProps> = ({newTaskArr, i, onChangedTask, changedTask, gangeClass, chooseHour, changedHour}) => {
     function getColor(priority: number) {
         let color = '';
         switch(true) {
@@ -54,12 +55,18 @@ const TaskOfWeek: FC<TaskOfWeekProps> = ({newTaskArr, i, onChangedTask, changedT
         return path;
     }
     let colorBg = '';
-    if(newTaskArr && cangeClass === 'changed') {
+    if(newTaskArr && gangeClass === 'changed' && newTaskArr.hour === changedHour) {
         colorBg = newTaskArr.index === changedTask.index ? 'dark-changed' : '';
     }
-    
     return (
-        <li key={i} className={`week-task ${colorBg}`} onClick={onChangedTask} data-task={newTaskArr ? newTaskArr.index : 0} data-time={clock}>
+        <li key={i} className={`week-task ${colorBg}`} 
+            onClick={(e) => {
+                onChangedTask(e);
+                chooseHour(e);
+            }} 
+            data-task={newTaskArr ? newTaskArr.index : 0}
+            data-time={newTaskArr ? newTaskArr.hour : changedHour}
+            >
             <div className="week-day-check">
                 <img src={getImg()} alt="" />
             </div>

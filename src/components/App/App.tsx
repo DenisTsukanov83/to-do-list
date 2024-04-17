@@ -157,6 +157,12 @@ const App: FC = () => {
                 console.log((el as HTMLElement).dataset.time)
                 setChangedHour(el ? `${(el as HTMLElement).dataset.time}` : '');
             }
+        }  else if((e.target as HTMLElement).closest('.week-task')) {
+            const el = (e.target as HTMLElement).closest('.week-task');
+            if (el) {
+                console.log((el as HTMLElement).dataset.time)
+                setChangedHour(el ? `${(el as HTMLElement).dataset.time}` : '');
+            }
         }
 
     }
@@ -228,14 +234,14 @@ const App: FC = () => {
             newData = data[index];
             const indexArr = newData.hours[changedHour].map(el => el.index).sort((a, b) => a - b);
             const indexNum = getIndex(indexArr);
-            newData.hours[changedHour].push({ index: indexNum ? indexNum : 0, task: '', priority: 1, isDone: false, status: status, text: '' });
+            newData.hours[changedHour].push({ index: indexNum ? indexNum : 0, task: '', priority: 1, isDone: false, status: status, text: '', hour: changedHour });
             newData.date = changedDate;
             newArr = data.filter(el => el.date.getTime() !== changedDate.getTime());
             newArr.push(newData);
         } else {
             const indexArr = newData.hours[changedHour].map(el => el.index);
             const indexNum = getIndex(indexArr);
-            newData.hours[changedHour].push({ index: indexNum ? indexNum : 0, task: '', priority: 1, isDone: false, status: status, text: '' });
+            newData.hours[changedHour].push({ index: indexNum ? indexNum : 0, task: '', priority: 1, isDone: false, status: status, text: '', hour: changedHour });
             newData.date = changedDate;
             newArr = [...data, newData];
         }
@@ -254,7 +260,8 @@ const App: FC = () => {
                     const newStatus = newData.hours[changedHour][i].status;
                     const newIndex = newData.hours[changedHour][i].index;
                     const newText = newData.hours[changedHour][i].text;
-                    return { index: newIndex, task: newTask, priority: +(e.target as HTMLSelectElement).value, isDone: newIsDone, status: newStatus, text: newText }
+                    const newHour = newData.hours[changedHour][i].hour;
+                    return { index: newIndex, task: newTask, priority: +(e.target as HTMLSelectElement).value, isDone: newIsDone, status: newStatus, text: newText, hour: newHour }
                 } else {
                     return el;
                 }
@@ -305,8 +312,9 @@ const App: FC = () => {
                     const newStatus = newData.hours[changedHour][i].status;
                     const newIndex = newData.hours[changedHour][i].index;
                     const newText = newData.hours[changedHour][i].text;
-                    const newPriority = newData.hours[changedHour][i].priority
-                    return { index: newIndex, task: newTask, priority: newPriority, isDone: (e.target as HTMLInputElement).checked, status: newStatus, text: newText }
+                    const newPriority = newData.hours[changedHour][i].priority;
+                    const newHour = newData.hours[changedHour][i].hour;
+                    return { index: newIndex, task: newTask, priority: newPriority, isDone: (e.target as HTMLInputElement).checked, status: newStatus, text: newText, hour: newHour }
 
                 } else {
                     return el;
@@ -355,6 +363,7 @@ const App: FC = () => {
             setChangedTask({ date: changedDate, hour: changedHour, index: indexTask ? +indexTask : 0 });
         }
         if ((e.target as HTMLElement).closest('.week-task')) {
+            console.log((e.target as HTMLElement).closest('.week-task'))
             const el = (e.target as HTMLElement).closest('.week-task');
             let indexTask = (el as HTMLElement).dataset.task;
             setChangedTask({ date: changedDate, hour: changedHour, index: indexTask ? +indexTask : 0 });
@@ -373,7 +382,8 @@ const App: FC = () => {
                     const newStatus = newData.hours[changedHour][i].status;
                     const newIndex = newData.hours[changedHour][i].index;
                     const newPriority = newData.hours[changedHour][i].priority;
-                    return { index: newIndex, task: newTask, priority: newPriority, isDone: newIsDone, status: newStatus, text: (e.target as HTMLTextAreaElement).value };
+                    const newHour = newData.hours[changedHour][i].hour;
+                    return { index: newIndex, task: newTask, priority: newPriority, isDone: newIsDone, status: newStatus, text: (e.target as HTMLTextAreaElement).value , hour: newHour};
                 } else {
                     return el;
                 }
@@ -384,9 +394,6 @@ const App: FC = () => {
         }
         setData(newArr);
     }
-
-
-
 
     return (
         <div className="App">

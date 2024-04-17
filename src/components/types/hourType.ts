@@ -4,5 +4,6 @@ export interface hourType {
     priority: number;
     isDone: boolean;
     status: string;
-    text: string
+    text: string,
+    hour: string
 }

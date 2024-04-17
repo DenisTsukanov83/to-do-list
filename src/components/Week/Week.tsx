@@ -15,7 +15,7 @@ interface WeekProps {
         id: string; 
         status: string;
         date: Date;
-        numberWeek: number;
+        numberWeek: number
     }[],
     data: dataType[],
     dataNative: dataType,
@@ -47,10 +47,8 @@ const Week: FC<WeekProps>  = ({time, getDaysArr, numberWeek, data, dataNative, c
                             }
                         });
 
-                        let tasksArr: { index: number, task: string, priority: number, isDone: boolean, status: string}[][] = [];
-                        let clock = '';
+                        let tasksArr: { index: number, task: string, priority: number, isDone: boolean, status: string, hour: string}[][] = [];
                         for(let key in newData.hours) {
-                            clock = key;
                             tasksArr.push(newData.hours[key])
                         }
                         return <DayOfWeek 
@@ -63,7 +61,6 @@ const Week: FC<WeekProps>  = ({time, getDaysArr, numberWeek, data, dataNative, c
                                     onChangedTask={onChangedTask}
                                     changedHour={changedHour}
                                     changedTask={changedTask}
-                                    clock={clock}
                                     chooseHour={chooseHour}/>
                         
                     })
